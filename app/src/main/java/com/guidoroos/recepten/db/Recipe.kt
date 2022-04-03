@@ -10,6 +10,6 @@ data class Recipe(
     val title: String,
     val description: String,
     val cuisineId : Long,
-    val typeId : Long
+    val recipeTypeId : Long
 )
 

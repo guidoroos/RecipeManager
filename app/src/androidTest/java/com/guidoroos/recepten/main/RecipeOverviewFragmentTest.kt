@@ -9,7 +9,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.example.android.architecture.blueprints.todoapp.launchFragmentInHiltContainer
 import com.guidoroos.recepten.R
-import com.guidoroos.recepten.ui.main.MainFragment
+import com.guidoroos.recepten.ui.main.RecipeOverviewFragment
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -22,7 +22,7 @@ import org.junit.runner.RunWith
 @SmallTest
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
-class MainFragmentTest {
+class RecipeOverviewFragmentTest {
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
@@ -38,7 +38,7 @@ class MainFragmentTest {
 
     @Test
     fun testLaunch() {
-        launchFragmentInHiltContainer<MainFragment>()
+        launchFragmentInHiltContainer<RecipeOverviewFragment>()
             onView(withId(R.id.button)).check(matches(isDisplayed()))
 
 

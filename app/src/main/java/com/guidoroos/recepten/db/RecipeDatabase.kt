@@ -16,18 +16,15 @@ import androidx.room.RoomDatabase
         Ingredient::class,
         Item::class,
         ItemType::class,
-        OperationType::class,
         Recipe::class,
         RecipeIngredient::class,
-        RecipeStep::class,
         RecipeType::class,
         Step::class,
-        StepIngredient::class,
         Unit::class,
         UnitType::class],
     version = 1, exportSchema = false)
 
-public abstract class RecipeDatabase : RoomDatabase() {
+abstract class RecipeDatabase : RoomDatabase() {
 
     abstract val recipeDao: RecipeDao
 

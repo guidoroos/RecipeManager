@@ -5,6 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "grocery_list")
 data class GroceryList  (
-    val recipeId : Long,
+    @PrimaryKey(autoGenerate = true)
+    val recipeId : Long = 0,
 
 )

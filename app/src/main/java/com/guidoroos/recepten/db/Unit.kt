@@ -8,7 +8,6 @@ data class Unit(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
     val description: String?,
-    val perStandard: Float,
-    val operationTypeId : Long,
+    val perStandardUnit: Float,
     val unitTypeId : Long
 )

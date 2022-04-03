@@ -8,7 +8,6 @@ data class Step(
     @PrimaryKey(autoGenerate = true)
     val id : Long = 0,
     val description: String,
-    val operationTypeId : Long,
     val position: Int,
     val timer: Long?
 )
