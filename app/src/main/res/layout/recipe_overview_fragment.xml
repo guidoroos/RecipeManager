@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.RecipeOverviewFragment">
+
+    <EditText
+        android:id="@+id/recipe_search_edittext"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginEnd="@dimen/margin_large"
+        android:ems="10"
+        android:hint="@string/search"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toStartOf="@+id/spinner_sort"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinner_sort"
+        android:layout_width="@dimen/search_icon_size"
+        android:layout_height="@dimen/search_icon_size"
+        android:layout_marginEnd="@dimen/margin_default"
+        android:background="@drawable/ic_sort"
+        app:layout_constraintBottom_toBottomOf="@id/editTextTextPersonName"
+        app:layout_constraintEnd_toStartOf="@+id/icon_filter"
+        app:layout_constraintTop_toTopOf="@id/editTextTextPersonName" />
+
+    <ImageView
+        android:id="@+id/icon_filter"
+        android:layout_width="@dimen/search_icon_size"
+        android:layout_height="@dimen/search_icon_size"
+        android:layout_marginEnd="@dimen/margin_default"
+        android:background="@drawable/ic_filter"
+        app:layout_constraintBottom_toBottomOf="@id/editTextTextPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/editTextTextPersonName" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_default"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

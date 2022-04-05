@@ -19,7 +19,7 @@ class RecipeOverviewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         viewModel = ViewModelProvider(this).get(RecipeOverviewViewModel::class.java)
-        return inflater.inflate(R.layout.main_fragment, container, false)
+        return inflater.inflate(R.layout.recipe_overview_fragment, container, false)
     }
 
 

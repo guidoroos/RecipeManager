@@ -8,7 +8,7 @@
         android:id="@+id/recipeOverviewFragment"
         android:name="com.guidoroos.recepten.ui.main.RecipeOverviewFragment"
         android:label="@string/all_recipes"
-        tools:layout="@layout/main_fragment" />
+        tools:layout="@layout/recipe_overview_fragment" />
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.guidoroos.recepten.ui.settings.SettingsFragment"
