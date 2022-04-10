@@ -8,7 +8,6 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.guidoroos.recepten.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 //exportschema is for archiving schema, version need update when update db
 //volatile means no caching, so all threads from one place so same values
@@ -35,11 +34,29 @@ abstract class RecipeDatabase : RoomDatabase() {
 
     abstract val recipeDao: RecipeDao
 
-    @Inject val instance:RecipeDatabase
-        get() {
-            TODO()
-        }
+    companion object {
+        @Volatile
+        private var INSTANCE: RecipeDatabase? = null
 
+        fun getInstance(context: Context,  scope: CoroutineScope): RecipeDatabase {
+            synchronized(this) {
+                var instance = INSTANCE
+
+                if (instance == null) {
+                    instance = Room.databaseBuilder(
+                        context.applicationContext,
+                        RecipeDatabase::class.java,
+                        "recipe_database"
+                    )
+                        .fallbackToDestructiveMigration()
+                        .addCallback(RecipeDatabaseCallback(scope))
+                        .build()
+                    INSTANCE = instance
+                }
+                return instance
+            }
+        }
+    }
 
     private class RecipeDatabaseCallback(
         private val scope: CoroutineScope

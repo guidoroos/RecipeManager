@@ -9,6 +9,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -23,19 +25,6 @@ class DatabaseModule {
     @Singleton
     fun provideAppDatabase(@ApplicationContext appContext: Context): RecipeDatabase {
 
-        Room.databaseBuilder(
-            appContext.applicationContext,
-            RecipeDatabase::class.java,
-            "recipe_database"
-        )
-            .fallbackToDestructiveMigration()
-            .addCallback(RecipeDatabase.RecipeDatabaseCallback(provideRecipeDao()))
-            .build()
-
-        return Room.databaseBuilder(
-            appContext,
-            RecipeDatabase::class.java,
-            "RssReader"
-        ).build()
+        return RecipeDatabase.getInstance(appContext, CoroutineScope(Dispatchers.IO))
     }
 }
