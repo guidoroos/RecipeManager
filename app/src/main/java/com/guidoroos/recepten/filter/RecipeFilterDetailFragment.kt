@@ -1,4 +1,4 @@
-package com.guidoroos.recepten.ui.filter
+package com.guidoroos.recepten.filter
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

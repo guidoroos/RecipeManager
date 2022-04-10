@@ -1,4 +1,4 @@
-package com.guidoroos.recepten.ui.recipe
+package com.guidoroos.recepten.recipe
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle

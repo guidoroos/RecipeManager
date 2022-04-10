@@ -9,7 +9,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.example.android.architecture.blueprints.todoapp.launchFragmentInHiltContainer
 import com.guidoroos.recepten.R
-import com.guidoroos.recepten.ui.main.RecipeOverviewFragment
+import com.guidoroos.recepten.main.ui.RecipeOverviewFragment
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi

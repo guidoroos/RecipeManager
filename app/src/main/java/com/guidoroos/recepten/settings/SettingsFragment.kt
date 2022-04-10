@@ -1,4 +1,4 @@
-package com.guidoroos.recepten.ui.settings
+package com.guidoroos.recepten.settings
 
 import android.os.Bundle
 import androidx.preference.PreferenceFragmentCompat

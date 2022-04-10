@@ -20,6 +20,7 @@
         <entry key="app/src/main/res/layout/main_activity.xml" value="0.23958333333333334" />
         <entry key="app/src/main/res/layout/main_fragment.xml" value="0.23958333333333334" />
         <entry key="app/src/main/res/layout/recipe_filter_fragment.xml" value="0.16847826086956522" />
+        <entry key="app/src/main/res/layout/recipe_item.xml" value="0.25" />
         <entry key="app/src/main/res/menu/menu_bottom_nav.xml" value="0.23958333333333334" />
       </map>
     </option>

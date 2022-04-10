@@ -6,21 +6,21 @@
     app:startDestination="@id/recipeOverviewFragment">
     <fragment
         android:id="@+id/recipeOverviewFragment"
-        android:name="com.guidoroos.recepten.ui.main.RecipeOverviewFragment"
+        android:name="com.guidoroos.recepten.main.ui.RecipeOverviewFragment"
         android:label="@string/all_recipes"
         tools:layout="@layout/recipe_overview_fragment" />
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.guidoroos.recepten.ui.settings.SettingsFragment"
+        android:name="com.guidoroos.recepten.settings.SettingsFragment"
         android:label="@string/settings" />
     <fragment
         android:id="@+id/groceryFragment"
-        android:name="com.guidoroos.recepten.ui.grocery.GroceryFragment"
+        android:name="com.guidoroos.recepten.grocery.GroceryFragment"
         android:label="@string/groceries"
         tools:layout="@layout/grocery_fragment" />
     <fragment
         android:id="@+id/recipeFragment"
-        android:name="com.guidoroos.recepten.ui.recipe.RecipeFragment"
+        android:name="com.guidoroos.recepten.recipe.RecipeFragment"
         android:label="@string/groceries"
         tools:layout="@layout/recipe_fragment" />
 </navigation>

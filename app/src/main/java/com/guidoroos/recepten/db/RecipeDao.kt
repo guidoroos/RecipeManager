@@ -1,15 +1,34 @@
 package com.guidoroos.recepten.db
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface RecipeDao {
 
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    suspend fun insert(: )
-//
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    suspend fun insertAll(vararg s: )
+    @Query("SELECT id FROM recipe_type WHERE name = :title")
+    fun getRecipeTypeId (title:String) :Long
+
+    @Query("SELECT id FROM cuisine WHERE name = :title")
+    fun getCuisineId (title:String) :Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(recipe: Recipe )
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(cuisine: Cuisine)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(recipeType: RecipeType )
+
+   @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(vararg s: RecipeType )
+
+    @Query("SELECT * FROM recipe ORDER BY title")
+    fun getAllRecipes(): Flow<List<Recipe>>
+
+
 //
 //    @Update
 //    suspend fun update(: )

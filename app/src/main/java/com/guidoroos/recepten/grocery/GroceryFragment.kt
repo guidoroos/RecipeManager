@@ -1,4 +1,4 @@
-package com.guidoroos.recepten.ui.grocery
+package com.guidoroos.recepten.grocery
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle

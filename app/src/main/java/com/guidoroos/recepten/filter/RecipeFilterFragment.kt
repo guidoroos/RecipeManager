@@ -1,4 +1,4 @@
-package com.guidoroos.recepten.ui.filter
+package com.guidoroos.recepten.filter
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
