@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.guidoroos.recepten.R
 import com.guidoroos.recepten.databinding.RecipeOverviewFragmentBinding
+import com.guidoroos.recepten.db.Recipe
 import com.guidoroos.recepten.main.model.SortingType
 import com.guidoroos.recepten.main.viewmodel.RecipeOverviewViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,20 +34,11 @@ class RecipeOverviewFragment : Fragment() {
         val adapter = RecipeOverViewAdapter()
         binding.recipeListRecyclerview.adapter = adapter
 
-        viewModel.recipeList.observe(viewLifecycleOwner, Observer {  it?.let { list ->
-            val sortedList = list.sortedBy { recipe ->
-                when (sortingType) {
-                    SortingType.NAME_ASC -> recipe.title
-                    SortingType.NAME_DESC -> recipe.title
-                    SortingType.CREATED_ASC -> recipe.timeCreated
-                    SortingType.CREATED_DESC -> recipe.timeCreated
-                    SortingType.LAST_SEEN_ASC -> recipe.timeLastSeen
-                    SortingType.LAST_SEEN_DESC -> recipe.timeLastSeen
-                }
-            }
-            adapter.submitList(list)
+        viewModel.recipeList.observe(viewLifecycleOwner, Observer { list ->
+            val sortedList = getSortedList(list)
+            sortedList?.let {adapter.submitList(it)}
         }
-        })
+        )
 
         val spinnerAdapter = requireContext().let {
             ArrayAdapter.createFromResource(
@@ -73,7 +65,10 @@ class RecipeOverviewFragment : Fragment() {
                         else -> SortingType.NAME_ASC
                     }
 
+                    val list = viewModel.recipeList.value
 
+                    val sortedList = getSortedList(list)
+                    sortedList?.let {adapter.submitList(it)}
 
                 }
             }
@@ -91,7 +86,15 @@ class RecipeOverviewFragment : Fragment() {
         return binding.root
     }
 
-
+    private fun getSortedList(list: List<Recipe>?) =
+        when (sortingType) {
+            SortingType.NAME_ASC -> list?.sortedBy { it.title }
+            SortingType.NAME_DESC -> list?.sortedByDescending { it.title }
+            SortingType.CREATED_ASC -> list?.sortedBy { it.timeCreated }
+            SortingType.CREATED_DESC -> list?.sortedByDescending { it.timeCreated }
+            SortingType.LAST_SEEN_ASC -> list?.sortedBy { it.timeLastSeen }
+            SortingType.LAST_SEEN_DESC -> list?.sortedByDescending { it.timeLastSeen }
+        }
 
 
 }
