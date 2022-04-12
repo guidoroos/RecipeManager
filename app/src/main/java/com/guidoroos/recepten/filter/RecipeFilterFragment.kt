@@ -10,23 +10,16 @@ import com.guidoroos.recepten.R
 
 class RecipeFilterFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = RecipeFilterFragment()
-    }
-
     private lateinit var viewModel: RecipeFilterViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        viewModel = ViewModelProvider(this).get(RecipeFilterViewModel::class.java)
+
         return inflater.inflate(R.layout.recipe_filter_fragment, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(RecipeFilterViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
 
 }

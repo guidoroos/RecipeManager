@@ -82,6 +82,13 @@ abstract class RecipeDatabase : RoomDatabase() {
                                 imageResourceId = R.drawable.italian_flag
                             )
                         )
+                        insert(
+                            Cuisine(
+                                name = "Indian",
+                                imageResourceId = R.drawable.indian_flag
+                            )
+                        )
+
 
                         recipeDao.insert(
                             Recipe(
@@ -89,6 +96,16 @@ abstract class RecipeDatabase : RoomDatabase() {
                                 imageResourceId = R.drawable.pasta_svgrepo_com,
                                 description = "Italian Pasta",
                                 cuisineId = getCuisineId("Italian"),
+                                recipeTypeId = getRecipeTypeId("Dinner")
+                            )
+                        )
+
+                        recipeDao.insert(
+                            Recipe(
+                                title = "Indian Curry",
+                                imageResourceId = R.drawable.curry,
+                                description = "Hot and spicy",
+                                cuisineId = getCuisineId("Indian"),
                                 recipeTypeId = getRecipeTypeId("Dinner")
                             )
                         )

@@ -5,9 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.guidoroos.recepten.R
 import com.guidoroos.recepten.databinding.RecipeOverviewFragmentBinding
+import com.guidoroos.recepten.main.model.SortingType
 import com.guidoroos.recepten.main.viewmodel.RecipeOverviewViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,6 +21,7 @@ class RecipeOverviewFragment : Fragment() {
     private val viewModel: RecipeOverviewViewModel by viewModels()
     private lateinit var binding:RecipeOverviewFragmentBinding
 
+    private var sortingType = SortingType.NAME_ASC
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,14 +33,65 @@ class RecipeOverviewFragment : Fragment() {
         val adapter = RecipeOverViewAdapter()
         binding.recipeListRecyclerview.adapter = adapter
 
-        viewModel.recipeList.observe(viewLifecycleOwner, Observer {  it?.let {
-            adapter.submitList(it)
+        viewModel.recipeList.observe(viewLifecycleOwner, Observer {  it?.let { list ->
+            val sortedList = list.sortedBy { recipe ->
+                when (sortingType) {
+                    SortingType.NAME_ASC -> recipe.title
+                    SortingType.NAME_DESC -> recipe.title
+                    SortingType.CREATED_ASC -> recipe.timeCreated
+                    SortingType.CREATED_DESC -> recipe.timeCreated
+                    SortingType.LAST_SEEN_ASC -> recipe.timeLastSeen
+                    SortingType.LAST_SEEN_DESC -> recipe.timeLastSeen
+                }
+            }
+            adapter.submitList(list)
         }
         })
+
+        val spinnerAdapter = requireContext().let {
+            ArrayAdapter.createFromResource(
+                it,
+                R.array.sorting_values,
+                android.R.layout.simple_spinner_item
+            ).also { adapter ->
+                // Specify the layout to use when the list of choices appears
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            }
+        }
+
+        binding.spinnerSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (parent != null) {
+                    val itemSelected =  parent.getItemAtPosition(position).toString()
+                    sortingType = when (itemSelected) {
+                            getString(R.string.alphabetical) -> SortingType.NAME_ASC
+                        getString(R.string.alphabetical_reverse) -> SortingType.NAME_DESC
+                            getString(R.string.time_created) -> SortingType.CREATED_ASC
+                            getString(R.string.time_created_reverse) -> SortingType.CREATED_DESC
+                            getString(R.string.time_last_seen) -> SortingType.LAST_SEEN_ASC
+                            getString(R.string.time_last_seen_reverse) -> SortingType.LAST_SEEN_DESC
+                        else -> SortingType.NAME_ASC
+                    }
+
+
+
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            //empty method
+            }
+        }
+
+        binding.spinnerSort.adapter = spinnerAdapter
+
+
 
 
         return binding.root
     }
+
+
 
 
 }

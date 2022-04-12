@@ -41,11 +41,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/recipe_search_edittext" />
 
+    <View
+        android:id="@+id/under_search_line"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginBottom="@dimen/margin_default"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:background="@color/secondaryColor"
+        app:layout_constraintBottom_toTopOf="@id/recipe_list_recyclerview" />
+
+    <View
+        android:id="@+id/recyclerview_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/margin_default"
+        android:layout_marginEnd="@dimen/margin_default"
+        android:background="@color/secondaryColor"
+        app:layout_constraintBottom_toTopOf="@id/recipe_list_recyclerview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recipe_list_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/margin_default"
+        android:layout_marginTop="@dimen/margin_extra_large"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

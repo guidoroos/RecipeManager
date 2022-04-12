@@ -9,4 +9,14 @@
         <item>reply</item>
         <item>reply_all</item>
     </string-array>
+
+    <string-array name="sorting_values">
+        <item>R.string.alphabetical</item>
+        <item>R.string.alphabetical_reverse</item>
+        <item>R.string.time_created</item>
+        <item>R.string.time_created_reverse</item>
+        <item>R.string.time_last_seen</item>
+        <item>R.string.time_last_seen_reverse</item>
+
+    </string-array>
 </resources>

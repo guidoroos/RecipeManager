@@ -26,5 +26,13 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!-- Sorting Type -->
+    <string name="alphabetical">Recipe Title A-Z</string>
+    <string name="alphabetical_reverse">Recipe Title Z-A</string>
+    <string name="time_created">Created Latest</string>
+    <string name="time_created_reverse">Created First</string>
+    <string name="time_last_seen">Seen Latest</string>
+    <string name="time_last_seen_reverse">Seen Longest Ago</string>
+
 
 </resources>

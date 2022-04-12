@@ -30,5 +30,6 @@ fun imageResourceOrPlaceholder(
         } else {
             AppCompatResources.getDrawable(view.context, imageResource)
         }
+
     view.setImageDrawable(drawable)
 }
