@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import com.guidoroos.recepten.R
 import com.guidoroos.recepten.databinding.RecipeOverviewFragmentBinding
 import com.guidoroos.recepten.db.Recipe
+import com.guidoroos.recepten.di.FilterType
 import com.guidoroos.recepten.main.model.SortingType
 import com.guidoroos.recepten.main.viewmodel.RecipeOverviewViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +24,7 @@ class RecipeOverviewFragment : Fragment() {
     private lateinit var binding:RecipeOverviewFragmentBinding
 
     private var sortingType = SortingType.NAME_ASC
+    private var clicked = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,10 +37,26 @@ class RecipeOverviewFragment : Fragment() {
         binding.recipeListRecyclerview.adapter = adapter
 
         viewModel.recipeList.observe(viewLifecycleOwner, Observer { list ->
-            val sortedList = getSortedList(list)
+            val filteredList = getFilteredList(list)
+            val sortedList = getSortedList(filteredList)
             sortedList?.let {adapter.submitList(it)}
         }
         )
+
+        viewModel.filterSet.observe(viewLifecycleOwner, Observer {
+            updateAdapterWithData(adapter)
+        }
+        )
+
+        binding.iconFilter.setOnClickListener {
+            if (clicked) {
+                viewModel.clearFilter()
+            } else {
+                viewModel.setFilter(FilterType.CUISINE, "Indian")
+            }
+            clicked = !clicked
+            updateAdapterWithData(adapter)
+        }
 
         val spinnerAdapter = requireContext().let {
             ArrayAdapter.createFromResource(
@@ -65,10 +83,7 @@ class RecipeOverviewFragment : Fragment() {
                         else -> SortingType.NAME_ASC
                     }
 
-                    val list = viewModel.recipeList.value
-
-                    val sortedList = getSortedList(list)
-                    sortedList?.let {adapter.submitList(it)}
+                    updateAdapterWithData(adapter)
 
                 }
             }
@@ -86,6 +101,26 @@ class RecipeOverviewFragment : Fragment() {
         return binding.root
     }
 
+    private fun updateAdapterWithData(adapter: RecipeOverViewAdapter) {
+        val list = viewModel.recipeList.value
+        val filteredList = getFilteredList(list)
+        val sortedList = getSortedList(filteredList)
+        sortedList?.let { adapter.submitList(it) }
+    }
+
+    private fun getFilteredList(list: List<Recipe>?): List<Recipe>? {
+        viewModel.filterSet.value.let { filterSet ->
+            return when (filterSet?.filterType) {
+                FilterType.NONE -> list
+                FilterType.CUISINE -> list?.filter { it.cuisineId == filterSet.filterValue }
+                FilterType.CREATED -> list?.filter { it.timeCreated < filterSet.filterValue }
+                FilterType.LAST_SEEN -> list?.filter { it.timeLastSeen < filterSet.filterValue }
+                FilterType.RECIPE_TYPE -> list?.filter { it.recipeTypeId == filterSet.filterValue }
+                else -> list
+            }
+        }
+    }
+
     private fun getSortedList(list: List<Recipe>?) =
         when (sortingType) {
             SortingType.NAME_ASC -> list?.sortedBy { it.title }
@@ -95,6 +130,8 @@ class RecipeOverviewFragment : Fragment() {
             SortingType.LAST_SEEN_ASC -> list?.sortedBy { it.timeLastSeen }
             SortingType.LAST_SEEN_DESC -> list?.sortedByDescending { it.timeLastSeen }
         }
+
+
 
 
 }
