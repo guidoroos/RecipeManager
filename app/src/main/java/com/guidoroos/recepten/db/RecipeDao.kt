@@ -28,18 +28,6 @@ interface RecipeDao {
     @Query("SELECT * FROM recipe ORDER BY title")
     fun getAllRecipes(): Flow<List<Recipe>>
 
-    @Query("SELECT * FROM recipe WHERE recipeTypeId =:recipeTypeId ORDER BY title")
-    fun getRecipesFilteredByRecipeType(recipeTypeId:Long): Flow<List<Recipe>>
-
-    @Query("SELECT * FROM recipe WHERE cuisineId =:cuisineId ORDER BY title")
-    fun getRecipesFilteredByCuisine(cuisineId:Long): Flow<List<Recipe>>
-
-    @Query("SELECT * FROM recipe WHERE timeLastSeen > :timeStamp ORDER BY title")
-    fun getRecipesFilteredByLastSeen(timeStamp:Long): Flow<List<Recipe>>
-
-    @Query("SELECT * FROM recipe WHERE timeCreated > :timeStamp ORDER BY title")
-    fun getRecipesFilteredByTimeCreated(timeStamp:Long): Flow<List<Recipe>>
-
 
 //
 //    @Update
