@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import com.guidoroos.recepten.R
 import com.guidoroos.recepten.databinding.RecipeOverviewFragmentBinding
 import com.guidoroos.recepten.db.Recipe
+import com.guidoroos.recepten.di.FilterType
 import com.guidoroos.recepten.main.model.SortingType
 import com.guidoroos.recepten.main.viewmodel.RecipeOverviewViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +24,7 @@ class RecipeOverviewFragment : Fragment() {
     private lateinit var binding:RecipeOverviewFragmentBinding
 
     private var sortingType = SortingType.NAME_ASC
+    private var clicked = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +41,14 @@ class RecipeOverviewFragment : Fragment() {
             sortedList?.let {adapter.submitList(it)}
         }
         )
+
+        binding.iconFilter.setOnClickListener {
+            if (clicked) {
+                viewModel.clearFilter()
+            } else {
+                viewModel.setFilter(FilterType.CUISINE, "Indian")
+            }
+        }
 
         val spinnerAdapter = requireContext().let {
             ArrayAdapter.createFromResource(
