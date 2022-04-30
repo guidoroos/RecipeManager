@@ -18,7 +18,8 @@ class RecipeOverviewViewModel @Inject constructor(private val repository: Recipe
     ViewModel() {
 
     private var filterSet: MutableStateFlow<Filter> = MutableStateFlow(Filter(FilterType.NONE, 0L))
-    var sortingType: MutableStateFlow<SortingType> = MutableStateFlow(SortingType.NAME_ASC)
+    private var sortingType: MutableStateFlow<SortingType> = MutableStateFlow(SortingType.NAME_ASC)
+
 
     @ExperimentalCoroutinesApi
     val filteredList = filterSet.flatMapLatest { filter ->
@@ -45,6 +46,10 @@ class RecipeOverviewViewModel @Inject constructor(private val repository: Recipe
         }
     }.asLiveData()
 
+
+    fun setSortingType (type: SortingType) {
+        sortingType.value = type
+    }
 
     fun clearFilter() {
         filterSet.value = Filter(FilterType.NONE, 0L)

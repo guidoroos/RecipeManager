@@ -68,8 +68,7 @@ class RecipeOverviewFragment : Fragment() {
                 id: Long
             ) {
                 if (parent != null) {
-                    val itemSelected = parent.getItemAtPosition(position).toString()
-                    viewModel.sortingType.value = when (itemSelected) {
+                    val sortingType =  when (parent.getItemAtPosition(position).toString()) {
                         getString(R.string.alphabetical) -> SortingType.NAME_ASC
                         getString(R.string.alphabetical_reverse) -> SortingType.NAME_DESC
                         getString(R.string.time_created) -> SortingType.CREATED_ASC
@@ -78,6 +77,7 @@ class RecipeOverviewFragment : Fragment() {
                         getString(R.string.time_last_seen_reverse) -> SortingType.LAST_SEEN_DESC
                         else -> SortingType.NAME_ASC
                     }
+                    viewModel.setSortingType(sortingType)
                 }
             }
 
