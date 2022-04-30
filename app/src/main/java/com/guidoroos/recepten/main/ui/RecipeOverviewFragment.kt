@@ -11,17 +11,17 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.guidoroos.recepten.R
 import com.guidoroos.recepten.databinding.RecipeOverviewFragmentBinding
-import com.guidoroos.recepten.db.Recipe
 import com.guidoroos.recepten.di.FilterType
 import com.guidoroos.recepten.main.model.SortingType
 import com.guidoroos.recepten.main.viewmodel.RecipeOverviewViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @AndroidEntryPoint
 class RecipeOverviewFragment : Fragment() {
 
     private val viewModel: RecipeOverviewViewModel by viewModels()
-    private lateinit var binding:RecipeOverviewFragmentBinding
+    private lateinit var binding: RecipeOverviewFragmentBinding
 
     private var sortingType = SortingType.NAME_ASC
     private var clicked = false
@@ -36,15 +36,8 @@ class RecipeOverviewFragment : Fragment() {
         val adapter = RecipeOverViewAdapter()
         binding.recipeListRecyclerview.adapter = adapter
 
-        viewModel.recipeList.observe(viewLifecycleOwner, Observer { list ->
-            val filteredList = getFilteredList(list)
-            val sortedList = getSortedList(filteredList)
-            sortedList?.let {adapter.submitList(it)}
-        }
-        )
-
-        viewModel.filterSet.observe(viewLifecycleOwner, Observer {
-            updateAdapterWithData(adapter)
+        viewModel.filteredSortedList.observe(viewLifecycleOwner, Observer { list ->
+            adapter.submitList(list)
         }
         )
 
@@ -55,7 +48,6 @@ class RecipeOverviewFragment : Fragment() {
                 viewModel.setFilter(FilterType.CUISINE, "Indian")
             }
             clicked = !clicked
-            updateAdapterWithData(adapter)
         }
 
         val spinnerAdapter = requireContext().let {
@@ -64,74 +56,38 @@ class RecipeOverviewFragment : Fragment() {
                 R.array.sorting_values,
                 android.R.layout.simple_spinner_item
             ).also { adapter ->
-                // Specify the layout to use when the list of choices appears
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             }
         }
 
         binding.spinnerSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 if (parent != null) {
-                    val itemSelected =  parent.getItemAtPosition(position).toString()
-                    sortingType = when (itemSelected) {
-                            getString(R.string.alphabetical) -> SortingType.NAME_ASC
+                    val itemSelected = parent.getItemAtPosition(position).toString()
+                    viewModel.sortingType.value = when (itemSelected) {
+                        getString(R.string.alphabetical) -> SortingType.NAME_ASC
                         getString(R.string.alphabetical_reverse) -> SortingType.NAME_DESC
-                            getString(R.string.time_created) -> SortingType.CREATED_ASC
-                            getString(R.string.time_created_reverse) -> SortingType.CREATED_DESC
-                            getString(R.string.time_last_seen) -> SortingType.LAST_SEEN_ASC
-                            getString(R.string.time_last_seen_reverse) -> SortingType.LAST_SEEN_DESC
+                        getString(R.string.time_created) -> SortingType.CREATED_ASC
+                        getString(R.string.time_created_reverse) -> SortingType.CREATED_DESC
+                        getString(R.string.time_last_seen) -> SortingType.LAST_SEEN_ASC
+                        getString(R.string.time_last_seen_reverse) -> SortingType.LAST_SEEN_DESC
                         else -> SortingType.NAME_ASC
                     }
-
-                    updateAdapterWithData(adapter)
-
                 }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-            //empty method
+                //empty method
             }
         }
-
         binding.spinnerSort.adapter = spinnerAdapter
-
-
-
 
         return binding.root
     }
-
-    private fun updateAdapterWithData(adapter: RecipeOverViewAdapter) {
-        val list = viewModel.recipeList.value
-        val filteredList = getFilteredList(list)
-        val sortedList = getSortedList(filteredList)
-        sortedList?.let { adapter.submitList(it) }
-    }
-
-    private fun getFilteredList(list: List<Recipe>?): List<Recipe>? {
-        viewModel.filterSet.value.let { filterSet ->
-            return when (filterSet?.filterType) {
-                FilterType.NONE -> list
-                FilterType.CUISINE -> list?.filter { it.cuisineId == filterSet.filterValue }
-                FilterType.CREATED -> list?.filter { it.timeCreated < filterSet.filterValue }
-                FilterType.LAST_SEEN -> list?.filter { it.timeLastSeen < filterSet.filterValue }
-                FilterType.RECIPE_TYPE -> list?.filter { it.recipeTypeId == filterSet.filterValue }
-                else -> list
-            }
-        }
-    }
-
-    private fun getSortedList(list: List<Recipe>?) =
-        when (sortingType) {
-            SortingType.NAME_ASC -> list?.sortedBy { it.title }
-            SortingType.NAME_DESC -> list?.sortedByDescending { it.title }
-            SortingType.CREATED_ASC -> list?.sortedBy { it.timeCreated }
-            SortingType.CREATED_DESC -> list?.sortedByDescending { it.timeCreated }
-            SortingType.LAST_SEEN_ASC -> list?.sortedBy { it.timeLastSeen }
-            SortingType.LAST_SEEN_DESC -> list?.sortedByDescending { it.timeLastSeen }
-        }
-
-
-
 
 }
