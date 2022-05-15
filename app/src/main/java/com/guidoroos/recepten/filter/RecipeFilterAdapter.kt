@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.guidoroos.recepten.databinding.FilterDetailItemBinding
-import com.guidoroos.recepten.filter.model.FilterItem
+import com.guidoroos.recepten.databinding.FilterItemBinding
 import com.guidoroos.recepten.filter.model.FilterType
 
 
-class RecipeFilterDetailAdapter(private val listener:FilterDetailItemListener) : ListAdapter<FilterItem, RecipeFilterDetailAdapter.ViewHolder>(DiffCallback()) {
+
+class RecipeFilterAdapter(private val clickListener:FilterItemListener) : ListAdapter<FilterType, RecipeFilterAdapter.ViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
@@ -18,19 +18,20 @@ class RecipeFilterDetailAdapter(private val listener:FilterDetailItemListener) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = getItem(position)
-        holder.bind(currentItem, listener)
+        holder.bind(currentItem, clickListener)
     }
 
-    class ViewHolder(private val binding: FilterDetailItemBinding) :
+    class ViewHolder(private val binding: FilterItemBinding):
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: FilterItem, listener: FilterDetailItemListener) {
-            binding.filterItem = item
+        fun bind(item: FilterType, listener:FilterItemListener) {
+            binding.filterType = item
             binding.clickListener =listener
         }
+
         companion object {
             fun from (parent: ViewGroup): ViewHolder {
                 val binding =
-                    FilterDetailItemBinding.inflate(
+                    FilterItemBinding.inflate(
                         LayoutInflater.from(parent.context),
                         parent,
                         false
@@ -40,15 +41,15 @@ class RecipeFilterDetailAdapter(private val listener:FilterDetailItemListener) :
         }
     }
 
-    class DiffCallback : DiffUtil.ItemCallback<FilterItem>() {
-        override fun areItemsTheSame(oldItem: FilterItem, newItem: FilterItem) =
+    class DiffCallback : DiffUtil.ItemCallback<FilterType>() {
+        override fun areItemsTheSame(oldItem: FilterType, newItem: FilterType) =
             oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: FilterItem, newItem: FilterItem) =
-            oldItem.filterItemName == newItem.filterItemName
+        override fun areContentsTheSame(oldItem: FilterType, newItem: FilterType) =
+            oldItem == newItem
     }
 
-    class FilterDetailItemListener(val clickListener: (filterItem:FilterItem) -> Unit) {
-        fun onClick(filterItem: FilterItem) = clickListener(filterItem)
+    class FilterItemListener(val clickListener: (filterType: FilterType) -> Unit) {
+        fun onClick(filterType: FilterType) = clickListener(filterType)
     }
 }

@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout>
+    <data>
+        <variable
+            name="clickListener"
+            type="com.guidoroos.recepten.filter.RecipeFilterDetailAdapter.FilterDetailItemListener"/>
+        <variable
+            name="filterItem"
+            type="com.guidoroos.recepten.filter.model.FilterItem"/>
+    </data>
+
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:onClick="@{() -> clickListener.onClick(filterItem)}"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -17,9 +29,10 @@
         android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="@{filterItem.filterItemName}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/checkBox"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -34,5 +34,19 @@
     <string name="time_last_seen">Seen Latest</string>
     <string name="time_last_seen_reverse">Seen Longest Ago</string>
 
+    <!-- Filter Type -->
+    <string name="filter_time_created">Time Created</string>
+    <string name="filter_time_last_seen">Time Last Seen</string>
+    <string name="filter_cuisine">Cuisine</string>
+    <string name="filter_recipe_type">Recipe Type</string>
+
+    <!-- Filter By Time -->
+    <string name="last_week">Last Week</string>
+    <string name="last_month">Last Month</string>
+    <string name="last_quarter">Last Quarter</string>
+    <string name="last_year">Last Year</string>
+    <string name="before_last_year">Before Last Year </string>
+    <string name="filter_error">Failure of setting filter</string>
+
 
 </resources>

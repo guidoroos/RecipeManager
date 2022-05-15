@@ -1,8 +1,8 @@
 package com.guidoroos.recepten.main.viewmodel
 
 import androidx.lifecycle.*
-import com.guidoroos.recepten.di.Filter
-import com.guidoroos.recepten.di.FilterType
+import com.guidoroos.recepten.filter.model.Filter
+import com.guidoroos.recepten.filter.model.FilterType
 import com.guidoroos.recepten.main.model.SortingType
 import com.guidoroos.recepten.repository.RecipeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -57,6 +57,10 @@ class RecipeOverviewViewModel @Inject constructor(private val repository: Recipe
 
     private fun setFilter(filterType: FilterType, value: Long) {
         filterSet.value = Filter(filterType, value)
+    }
+
+    fun setFilter(filter:Filter) {
+        filterSet.value = filter
     }
 
     fun setFilter(filterType: FilterType, value: String) {

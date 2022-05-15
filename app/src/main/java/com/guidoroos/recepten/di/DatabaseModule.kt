@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.guidoroos.recepten.db.RecipeDao
 import com.guidoroos.recepten.db.RecipeDatabase
+import com.guidoroos.recepten.repository.RecipeRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,10 +22,8 @@ class DatabaseModule {
         return database.recipeDao
     }
 
-    @Provides
     @Singleton
     fun provideAppDatabase(@ApplicationContext appContext: Context): RecipeDatabase {
-
         return RecipeDatabase.getInstance(appContext, CoroutineScope(Dispatchers.IO))
     }
 }

@@ -11,20 +11,17 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.guidoroos.recepten.R
 import com.guidoroos.recepten.databinding.RecipeOverviewFragmentBinding
-import com.guidoroos.recepten.di.FilterType
+import com.guidoroos.recepten.filter.RecipeFilterDialogFragment
+import com.guidoroos.recepten.filter.model.Filter
 import com.guidoroos.recepten.main.model.SortingType
 import com.guidoroos.recepten.main.viewmodel.RecipeOverviewViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @AndroidEntryPoint
 class RecipeOverviewFragment : Fragment() {
 
     private val viewModel: RecipeOverviewViewModel by viewModels()
     private lateinit var binding: RecipeOverviewFragmentBinding
-
-    private var sortingType = SortingType.NAME_ASC
-    private var clicked = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,12 +39,7 @@ class RecipeOverviewFragment : Fragment() {
         )
 
         binding.iconFilter.setOnClickListener {
-            if (clicked) {
-                viewModel.clearFilter()
-            } else {
-                viewModel.setFilter(FilterType.CUISINE, "Indian")
-            }
-            clicked = !clicked
+            RecipeFilterDialogFragment().show(childFragmentManager, "filterDialog")
         }
 
         val spinnerAdapter = requireContext().let {
@@ -89,5 +81,10 @@ class RecipeOverviewFragment : Fragment() {
 
         return binding.root
     }
+
+    fun setFilter(filter:Filter) {
+        viewModel.setFilter(filter)
+    }
+
 
 }
