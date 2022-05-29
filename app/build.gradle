@@ -19,6 +19,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "com.guidoroos.recepten.di.CustomTestRunner"
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {

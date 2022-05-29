@@ -2,18 +2,18 @@ package com.guidoroos.recepten.util
 
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
+import androidx.annotation.DrawableRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
-import com.google.android.play.core.splitinstall.d
 import com.guidoroos.recepten.R
-import androidx.annotation.DrawableRes
-
-
 
 
 @BindingAdapter("imageUrl")
-fun loadImage(view: ImageView, url: String) { // This methods should not have any return type, = declaration would make it return that object declaration.
+fun loadImage(
+    view: ImageView,
+    url: String
+) { // This methods should not have any return type, = declaration would make it return that object declaration.
     Glide.with(view.context)
         .load(url)
         .placeholder(R.drawable.ic_baseline_local_dining_24)
@@ -21,18 +21,15 @@ fun loadImage(view: ImageView, url: String) { // This methods should not have an
         .into(view)
 }
 
-@BindingAdapter("imageResource", "placeholder")
+@BindingAdapter("imageResource")
 fun imageResourceOrPlaceholder(
     view: ImageView,
-    imageResource: Int?,
-    placeholder: Drawable
+    @DrawableRes imageResource: Int?
 ) {
-    val drawable =
-        if (imageResource == null) {
-            placeholder
-        } else {
-            AppCompatResources.getDrawable(view.context, imageResource)
-        }
-
-    view.setImageDrawable(drawable)
+    if (imageResource == null) {
+        view.setImageResource(R.drawable.ic_baseline_local_dining_24)
+    } else {
+        val drawable = AppCompatResources.getDrawable(view.context,imageResource)
+        view.setImageDrawable(drawable)
+    }
 }

@@ -2,9 +2,11 @@ package com.guidoroos.recepten.main.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.guidoroos.recepten.R
 import com.guidoroos.recepten.databinding.RecipeItemBinding
 import com.guidoroos.recepten.db.Recipe
 
@@ -27,6 +29,7 @@ class RecipeOverViewAdapter : ListAdapter<Recipe, RecipeOverViewAdapter.ViewHold
         }
         companion object {
             fun from (parent: ViewGroup): ViewHolder {
+
                 val binding =
                     RecipeItemBinding.inflate(
                         LayoutInflater.from(parent.context),
