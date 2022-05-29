@@ -7,6 +7,10 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.google.android.play.core.splitinstall.d
 import com.guidoroos.recepten.R
+import androidx.annotation.DrawableRes
+
+
+
 
 @BindingAdapter("imageUrl")
 fun loadImage(view: ImageView, url: String) { // This methods should not have any return type, = declaration would make it return that object declaration.
@@ -16,7 +20,6 @@ fun loadImage(view: ImageView, url: String) { // This methods should not have an
         .circleCrop()
         .into(view)
 }
-
 
 @BindingAdapter("imageResource", "placeholder")
 fun imageResourceOrPlaceholder(

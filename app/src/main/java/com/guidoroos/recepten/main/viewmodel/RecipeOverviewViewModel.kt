@@ -2,6 +2,7 @@ package com.guidoroos.recepten.main.viewmodel
 
 import androidx.lifecycle.*
 import com.guidoroos.recepten.filter.model.Filter
+import com.guidoroos.recepten.filter.model.FilterTimeUnit
 import com.guidoroos.recepten.filter.model.FilterType
 import com.guidoroos.recepten.main.model.SortingType
 import com.guidoroos.recepten.repository.RecipeRepository
@@ -20,6 +21,11 @@ class RecipeOverviewViewModel @Inject constructor(private val repository: Recipe
     private var filterSet: MutableStateFlow<Filter> = MutableStateFlow(Filter(FilterType.NONE, 0L))
     private var sortingType: MutableStateFlow<SortingType> = MutableStateFlow(SortingType.NAME_ASC)
 
+    val filterTypes = FilterType.values().toMutableList().apply {remove(FilterType.NONE)}
+    val timeFilterData = FilterTimeUnit.values().toList()
+    val cuisineFilterData = repository.getAllCuisines().asLiveData()
+    val recipeTypeFilterData = repository.getAllRecipeTypes().asLiveData()
+
 
     @ExperimentalCoroutinesApi
     val filteredList = filterSet.flatMapLatest { filter ->
@@ -27,10 +33,14 @@ class RecipeOverviewViewModel @Inject constructor(private val repository: Recipe
 
         return@flatMapLatest when (filter.filterType) {
             FilterType.NONE -> list
-            FilterType.CUISINE -> list.map { it.filter { item -> item.cuisineId == filterSet.value.filterValue } }
-            FilterType.CREATED -> list.map { it.filter { item -> item.timeCreated < filterSet.value.filterValue } }
-            FilterType.LAST_SEEN -> list.map { it.filter { item -> item.timeLastSeen < filterSet.value.filterValue } }
-            FilterType.RECIPE_TYPE -> list.map {it.filter { item -> item.recipeTypeId == filterSet.value.filterValue }}
+            FilterType.CUISINE -> list.map { it.filter {
+                    item -> item.cuisineId == filterSet.value.filterValue } }
+            FilterType.CREATED -> list.map { it.filter {
+                    item -> item.timeCreated > filterSet.value.filterValue } }
+            FilterType.LAST_SEEN -> list.map { it.filter {
+                    item -> item.timeLastSeen > filterSet.value.filterValue } }
+            FilterType.RECIPE_TYPE -> list.map {it.filter {
+                    item -> item.recipeTypeId == filterSet.value.filterValue }}
         }
     }
 
@@ -55,31 +65,14 @@ class RecipeOverviewViewModel @Inject constructor(private val repository: Recipe
         filterSet.value = Filter(FilterType.NONE, 0L)
     }
 
-    private fun setFilter(filterType: FilterType, value: Long) {
-        filterSet.value = Filter(filterType, value)
-    }
-
     fun setFilter(filter:Filter) {
         filterSet.value = filter
     }
 
-    fun setFilter(filterType: FilterType, value: String) {
-        when (filterType) {
-            FilterType.RECIPE_TYPE -> setTypeIdFilter(value)
-            FilterType.CUISINE -> setCuisineIdFilter(value)
-            else -> clearFilter()
-        }
+    fun isFilterSet() : Boolean {
+        return filterSet.value.filterType != FilterType.NONE
     }
 
-    private fun setTypeIdFilter(title: String) = CoroutineScope(Dispatchers.IO).launch {
-        val typeId = repository.getTypeId(title)
-        setFilter(FilterType.RECIPE_TYPE, typeId)
-    }
-
-    private fun setCuisineIdFilter(title: String) = CoroutineScope(Dispatchers.IO).launch {
-        val cuisineId = repository.getCuisineId(title)
-        setFilter(FilterType.CUISINE, cuisineId)
-    }
 }
 
 

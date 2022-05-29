@@ -7,16 +7,9 @@
         android:pathData="M12 4C7.58 4 4 7.58 4 12C4 16.42 7.58 20 12 20C16.42 20 20 16.42 20 12C20 7.58 16.42 4 12 4ZM16.25 16.15L11 13V7H12.5V12.25L17 14.92L16.25 16.15Z">
         <aapt:attr
             name="android:fillColor">
-            <gradient
-                android:startX="12"
-                android:startY="4"
-                android:endX="12"
-                android:endY="20"
-                android:tileMode="clamp">
                 <item
                     android:color="#263238"
                     android:offset="0" />
-            </gradient>
         </aapt:attr>
     </path>
     <path

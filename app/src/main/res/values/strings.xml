@@ -47,6 +47,7 @@
     <string name="last_year">Last Year</string>
     <string name="before_last_year">Before Last Year </string>
     <string name="filter_error">Failure of setting filter</string>
+    <string name="choose_filter">Choose Filter</string>
 
 
 </resources>

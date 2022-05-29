@@ -8,16 +8,16 @@ import kotlinx.coroutines.flow.Flow
 interface RecipeDao {
 
     @Query("SELECT id FROM recipe_type WHERE name = :title")
-    fun getRecipeTypeId (title:String) :Long
+    suspend fun getRecipeTypeId (title:String) :Long
 
     @Query("SELECT id FROM cuisine WHERE name = :title")
-    fun getCuisineId (title:String) :Long
+    suspend fun getCuisineId (title:String) :Long
 
     @Query("SELECT name FROM cuisine WHERE id = :id")
-    fun getCuisineName(id: Long): String
+    suspend fun getCuisineName(id: Long): String
 
-    @Query("SELECT name FROM cuisine WHERE id = :id")
-    abstract fun getRecipeTypeName(id: Long): String
+    @Query("SELECT name FROM recipe_type WHERE id = :id")
+    suspend fun getRecipeTypeName(id: Long): String
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(recipe: Recipe )

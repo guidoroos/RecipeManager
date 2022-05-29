@@ -8,7 +8,11 @@
         android:id="@+id/recipeOverviewFragment"
         android:name="com.guidoroos.recepten.main.ui.RecipeOverviewFragment"
         android:label="@string/all_recipes"
-        tools:layout="@layout/recipe_overview_fragment" />
+        tools:layout="@layout/recipe_overview_fragment" >
+        <action
+            android:id="@+id/action_recipeOverviewFragment_to_recipeFilterFragment"
+            app:destination="@id/recipeFilterFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.guidoroos.recepten.settings.SettingsFragment"
@@ -23,4 +27,8 @@
         android:name="com.guidoroos.recepten.recipe.RecipeFragment"
         android:label="@string/groceries"
         tools:layout="@layout/recipe_fragment" />
+    <fragment
+        android:id="@+id/recipeFilterFragment"
+        android:name="com.guidoroos.recepten.filter.RecipeFilterFragment"
+        android:label="RecipeFilterFragment" />
 </navigation>

@@ -7,11 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.appcompat.content.res.AppCompatResources.getDrawable
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.guidoroos.recepten.R
 import com.guidoroos.recepten.databinding.RecipeOverviewFragmentBinding
-import com.guidoroos.recepten.filter.RecipeFilterDialogFragment
+import com.guidoroos.recepten.filter.RecipeFilterFragment
 import com.guidoroos.recepten.filter.model.Filter
 import com.guidoroos.recepten.main.model.SortingType
 import com.guidoroos.recepten.main.viewmodel.RecipeOverviewViewModel
@@ -20,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class RecipeOverviewFragment : Fragment() {
 
-    private val viewModel: RecipeOverviewViewModel by viewModels()
+    private val viewModel: RecipeOverviewViewModel by activityViewModels()
     private lateinit var binding: RecipeOverviewFragmentBinding
 
     override fun onCreateView(
@@ -33,13 +36,22 @@ class RecipeOverviewFragment : Fragment() {
         val adapter = RecipeOverViewAdapter()
         binding.recipeListRecyclerview.adapter = adapter
 
+        if (viewModel.isFilterSet()) {
+            binding.iconFilter.background = getDrawable(requireContext(),R.drawable.ic_filter_cross)
+        }
+
         viewModel.filteredSortedList.observe(viewLifecycleOwner, Observer { list ->
             adapter.submitList(list)
         }
         )
 
         binding.iconFilter.setOnClickListener {
-            RecipeFilterDialogFragment().show(childFragmentManager, "filterDialog")
+            if (viewModel.isFilterSet()) {
+                viewModel.clearFilter()
+                binding.iconFilter.background = getDrawable(requireContext(),R.drawable.ic_filter)
+            } else {
+                findNavController().navigate(R.id.recipeFilterFragment)
+            }
         }
 
         val spinnerAdapter = requireContext().let {
@@ -80,10 +92,6 @@ class RecipeOverviewFragment : Fragment() {
         binding.spinnerSort.adapter = spinnerAdapter
 
         return binding.root
-    }
-
-    fun setFilter(filter:Filter) {
-        viewModel.setFilter(filter)
     }
 
 

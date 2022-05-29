@@ -2,7 +2,7 @@ package com.guidoroos.recepten.filter.model
 
 import com.guidoroos.recepten.R
 
-enum class FilterType(val iconResource:Int? = null,
+enum class FilterType( val iconResource:Int? = null,
                       val nameResource:Int? = null) {
     NONE,
     CUISINE(R.drawable.ic_location,R.string.filter_cuisine),
