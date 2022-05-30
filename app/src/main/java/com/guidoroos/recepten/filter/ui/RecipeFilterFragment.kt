@@ -1,25 +1,18 @@
-package com.guidoroos.recepten.filter
+package com.guidoroos.recepten.filter.ui
 
-import android.content.res.Resources
 import android.icu.util.Calendar
 import android.icu.util.TimeZone
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.guidoroos.recepten.R
 import com.guidoroos.recepten.databinding.RecipeFilterFragmentBinding
 import com.guidoroos.recepten.filter.model.Filter
 import com.guidoroos.recepten.filter.model.FilterItem
 import com.guidoroos.recepten.filter.model.FilterTimeUnit
 import com.guidoroos.recepten.filter.model.FilterType
-import com.guidoroos.recepten.main.ui.RecipeOverviewFragment
 import com.guidoroos.recepten.main.viewmodel.RecipeOverviewViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

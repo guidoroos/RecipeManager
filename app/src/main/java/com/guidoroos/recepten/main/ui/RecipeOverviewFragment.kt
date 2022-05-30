@@ -9,13 +9,10 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.guidoroos.recepten.R
 import com.guidoroos.recepten.databinding.RecipeOverviewFragmentBinding
-import com.guidoroos.recepten.filter.RecipeFilterFragment
-import com.guidoroos.recepten.filter.model.Filter
 import com.guidoroos.recepten.main.model.SortingType
 import com.guidoroos.recepten.main.viewmodel.RecipeOverviewViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,7 +30,9 @@ class RecipeOverviewFragment : Fragment() {
 
         binding = RecipeOverviewFragmentBinding.inflate(layoutInflater, container, false)
 
-        val adapter = RecipeOverViewAdapter()
+        val adapter = RecipeOverViewAdapter(RecipeOverViewAdapter.RecipeOverviewItemListener { recipe ->
+            RecipeOverviewFragmentDirections.actionRecipeOverviewFragmentToRecipeFragment(recipe.id)
+        })
         binding.recipeListRecyclerview.adapter = adapter
 
         if (viewModel.isFilterSet()) {

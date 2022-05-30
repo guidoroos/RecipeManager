@@ -3,7 +3,7 @@
     <data>
         <variable
             name="clickListener"
-            type="com.guidoroos.recepten.filter.RecipeFilterDetailAdapter.FilterDetailItemListener"/>
+            type="com.guidoroos.recepten.filter.ui.RecipeFilterDetailAdapter.FilterDetailItemListener"/>
         <variable
             name="filterItem"
             type="com.guidoroos.recepten.filter.model.FilterItem"/>

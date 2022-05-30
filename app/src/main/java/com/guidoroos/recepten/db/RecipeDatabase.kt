@@ -96,7 +96,8 @@ abstract class RecipeDatabase : RoomDatabase() {
                                 imageResourceId = R.drawable.pasta,
                                 description = "Italian Pasta",
                                 cuisineId = getCuisineId("Italian"),
-                                recipeTypeId = getRecipeTypeId("Dinner")
+                                recipeTypeId = getRecipeTypeId("Dinner"),
+                                level = 1
                             )
                         )
 
@@ -106,7 +107,8 @@ abstract class RecipeDatabase : RoomDatabase() {
                                 imageResourceId = R.drawable.curry,
                                 description = "Hot and spicy",
                                 cuisineId = getCuisineId("Indian"),
-                                recipeTypeId = getRecipeTypeId("Dinner")
+                                recipeTypeId = getRecipeTypeId("Dinner"),
+                                level = 2
                             )
                         )
                     }

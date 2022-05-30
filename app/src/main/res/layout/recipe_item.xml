@@ -3,15 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-
         <variable
             name="recipe"
             type="com.guidoroos.recepten.db.Recipe" />
+        <variable
+            name="listener"
+            type="com.guidoroos.recepten.main.ui.RecipeOverViewAdapter.RecipeOverviewItemListener" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:onClick="@{() -> listener.onClick(recipe)}">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imageView"

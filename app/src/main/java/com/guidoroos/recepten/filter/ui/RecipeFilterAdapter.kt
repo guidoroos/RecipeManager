@@ -1,4 +1,4 @@
-package com.guidoroos.recepten.filter
+package com.guidoroos.recepten.filter.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,7 +10,9 @@ import com.guidoroos.recepten.filter.model.FilterType
 
 
 
-class RecipeFilterAdapter(private val clickListener:FilterItemListener) : ListAdapter<FilterType, RecipeFilterAdapter.ViewHolder>(DiffCallback()) {
+class RecipeFilterAdapter(private val clickListener: FilterItemListener) : ListAdapter<FilterType, RecipeFilterAdapter.ViewHolder>(
+    DiffCallback()
+) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
@@ -23,7 +25,7 @@ class RecipeFilterAdapter(private val clickListener:FilterItemListener) : ListAd
 
     class ViewHolder(private val binding: FilterItemBinding):
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: FilterType, listener:FilterItemListener) {
+        fun bind(item: FilterType, listener: FilterItemListener) {
             binding.filterType = item
             binding.clickListener =listener
         }

@@ -13,6 +13,7 @@ data class Recipe(
     val cuisineId: Long? = null,
     val recipeTypeId: Long,
     val timeCreated: Long = System.currentTimeMillis(),
-    val timeLastSeen: Long = System.currentTimeMillis()
+    val timeLastSeen: Long = System.currentTimeMillis(),
+    val level: Int
 )
 

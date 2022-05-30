@@ -9,9 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.guidoroos.recepten.R
 import com.guidoroos.recepten.databinding.RecipeItemBinding
 import com.guidoroos.recepten.db.Recipe
+import com.guidoroos.recepten.filter.model.FilterItem
 
 
-class RecipeOverViewAdapter : ListAdapter<Recipe, RecipeOverViewAdapter.ViewHolder>(DiffCallback()) {
+class RecipeOverViewAdapter(private val listener:RecipeOverviewItemListener):
+    ListAdapter<Recipe, RecipeOverViewAdapter.ViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
@@ -19,13 +21,14 @@ class RecipeOverViewAdapter : ListAdapter<Recipe, RecipeOverViewAdapter.ViewHold
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = getItem(position)
-        holder.bind(currentItem)
+        holder.bind(currentItem,listener)
     }
 
     class ViewHolder(private val binding:RecipeItemBinding ) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Recipe) {
+        fun bind(item: Recipe, listener:RecipeOverviewItemListener) {
             binding.recipe = item
+            binding.listener = listener
         }
         companion object {
             fun from (parent: ViewGroup): ViewHolder {
@@ -47,5 +50,9 @@ class RecipeOverViewAdapter : ListAdapter<Recipe, RecipeOverViewAdapter.ViewHold
 
         override fun areContentsTheSame(oldItem:Recipe  , newItem:Recipe  ) =
             oldItem == newItem
+    }
+
+    class RecipeOverviewItemListener(val clickListener: (recipe: Recipe) -> Unit) {
+        fun onClick(recipe: Recipe) = clickListener(recipe)
     }
 }

@@ -48,6 +48,8 @@
     <string name="before_last_year">Before Last Year </string>
     <string name="filter_error">Failure of setting filter</string>
     <string name="choose_filter">Choose Filter</string>
+    <string name="level">Level</string>
+    <string name="steps">Steps</string>
 
 
 </resources>
