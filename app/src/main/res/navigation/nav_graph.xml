@@ -31,8 +31,8 @@
         android:label="@string/groceries"
         tools:layout="@layout/recipe_fragment" >
         <argument
-            android:name="recipeId"
-            app:argType="long" />
+            android:name="recipe"
+            app:argType="com.guidoroos.recepten.db.Recipe" />
     </fragment>
     <fragment
         android:id="@+id/recipeFilterFragment"

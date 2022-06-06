@@ -97,7 +97,8 @@ abstract class RecipeDatabase : RoomDatabase() {
                                 description = "Italian Pasta",
                                 cuisineId = getCuisineId("Italian"),
                                 recipeTypeId = getRecipeTypeId("Dinner"),
-                                level = 1
+                                level = 1,
+                                minutesDuration = 25
                             )
                         )
 
@@ -108,7 +109,8 @@ abstract class RecipeDatabase : RoomDatabase() {
                                 description = "Hot and spicy",
                                 cuisineId = getCuisineId("Indian"),
                                 recipeTypeId = getRecipeTypeId("Dinner"),
-                                level = 2
+                                level = 2,
+                                minutesDuration = 40
                             )
                         )
                     }

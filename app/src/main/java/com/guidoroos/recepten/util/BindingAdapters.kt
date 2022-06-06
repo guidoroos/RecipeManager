@@ -2,8 +2,11 @@ package com.guidoroos.recepten.util
 
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.guidoroos.recepten.R
@@ -33,3 +36,41 @@ fun imageResourceOrPlaceholder(
         view.setImageDrawable(drawable)
     }
 }
+
+@BindingAdapter("setFilled")
+fun setFilled(
+    view: ImageView,
+    shouldFill:Boolean
+) {
+    if (shouldFill) {
+        val color = ContextCompat.getColor(view.context,R.color.primaryColor)
+        view.setColorFilter(color)
+    } else {
+        val color = ContextCompat.getColor(view.context,R.color.primaryTextColor)
+        view.setColorFilter(color)
+    }
+}
+
+@BindingAdapter("starLevel","starNumber")
+fun setStarsFilled(
+    view: ImageView,
+    level: Int,
+    starNumber:Int
+) {
+    when (starNumber) {
+        1 -> setFilled(view,level >= 1)
+        2 -> setFilled(view,level >= 2)
+        3 -> setFilled (view, level >= 3)
+    }
+}
+
+@BindingAdapter("formatDuration")
+fun setDurationText(
+    view: TextView,
+    minutes:Int
+) {
+    val text = "$minutes minutes"
+    view.text = text
+}
+
+

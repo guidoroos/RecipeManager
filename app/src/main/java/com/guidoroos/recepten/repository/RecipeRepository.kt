@@ -17,8 +17,10 @@ class RecipeRepository @Inject constructor(private val dao: RecipeDao) {
     suspend fun getCuisineId (title:String) = dao.getCuisineId(title)
     suspend fun getTypeId (title:String) = dao.getRecipeTypeId(title)
 
-    private suspend fun getCuisineName (id:Long) = dao.getCuisineName(id)
-    private  suspend fun getRecipeTypeName (id:Long) = dao.getRecipeTypeName(id)
+    suspend fun getCuisineName (id:Long) = dao.getCuisineName(id)
+    suspend fun getRecipeTypeName (id:Long) = dao.getRecipeTypeName(id)
+
+    suspend fun getRecipeFromId (id:Long) = dao.getRecipeFromId(id)
 
     fun getAllRecipeTypes(): Flow<List<FilterItem>> {
         return allRecipes.map { list ->

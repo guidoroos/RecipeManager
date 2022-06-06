@@ -39,7 +39,7 @@ class RecipeOverviewFragmentTest {
     @Test
     fun testLaunch() {
         launchFragmentInHiltContainer<RecipeOverviewFragment>()
-            onView(withId(R.id.button)).check(matches(isDisplayed()))
+            onView(withId(R.id.button_ingredients)).check(matches(isDisplayed()))
 
 
 

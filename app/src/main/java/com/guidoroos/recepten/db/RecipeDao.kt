@@ -19,6 +19,9 @@ interface RecipeDao {
     @Query("SELECT name FROM recipe_type WHERE id = :id")
     suspend fun getRecipeTypeName(id: Long): String
 
+    @Query("SELECT * FROM recipe WHERE id = :id")
+    suspend fun getRecipeFromId(id: Long): Recipe
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(recipe: Recipe )
 

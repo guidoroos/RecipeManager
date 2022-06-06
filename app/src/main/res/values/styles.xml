@@ -16,4 +16,13 @@
         <item name="cornerSize">20dp</item>
     </style>
 
+    <style name="normal_textview">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/primaryColor</item>
+    </style>
+
+    <style name="buttonStyle">
+        <item name="android:textSize">18sp</item>
+    </style>
+
 </resources>

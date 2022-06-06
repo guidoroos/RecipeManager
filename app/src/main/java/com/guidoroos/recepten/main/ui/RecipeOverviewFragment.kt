@@ -31,7 +31,8 @@ class RecipeOverviewFragment : Fragment() {
         binding = RecipeOverviewFragmentBinding.inflate(layoutInflater, container, false)
 
         val adapter = RecipeOverViewAdapter(RecipeOverViewAdapter.RecipeOverviewItemListener { recipe ->
-            RecipeOverviewFragmentDirections.actionRecipeOverviewFragmentToRecipeFragment(recipe.id)
+           findNavController().navigate(RecipeOverviewFragmentDirections
+               .actionRecipeOverviewFragmentToRecipeFragment(recipe))
         })
         binding.recipeListRecyclerview.adapter = adapter
 
