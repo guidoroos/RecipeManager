@@ -10,5 +10,5 @@ enum class FilterType( val iconResource:Int? = null,
     LAST_SEEN(R.drawable.ic_clock,R.string.filter_time_last_seen),
     RECIPE_TYPE(R.drawable.ic_category,R.string.filter_recipe_type) }
 
-data class Filter (val filterType: FilterType, val filterValue: Long)
+data class Filter (val filterType: FilterType, val filterValue: FilterValue?)
 

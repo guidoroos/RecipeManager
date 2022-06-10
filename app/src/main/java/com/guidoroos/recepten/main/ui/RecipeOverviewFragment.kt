@@ -30,6 +30,8 @@ class RecipeOverviewFragment : Fragment() {
 
         binding = RecipeOverviewFragmentBinding.inflate(layoutInflater, container, false)
 
+        binding.toolbar.title = getString(R.string.all_recipes)
+
         val adapter = RecipeOverViewAdapter(RecipeOverViewAdapter.RecipeOverviewItemListener { recipe ->
            findNavController().navigate(RecipeOverviewFragmentDirections
                .actionRecipeOverviewFragmentToRecipeFragment(recipe))
@@ -37,7 +39,7 @@ class RecipeOverviewFragment : Fragment() {
         binding.recipeListRecyclerview.adapter = adapter
 
         if (viewModel.isFilterSet()) {
-            binding.iconFilter.background = getDrawable(requireContext(),R.drawable.ic_filter_cross)
+            binding.iconFilter.background = getDrawable(requireContext(),R.drawable.ic_clear_filter)
         }
 
         viewModel.filteredSortedList.observe(viewLifecycleOwner, Observer { list ->

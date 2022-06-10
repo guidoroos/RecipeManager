@@ -10,12 +10,11 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.guidoroos.recepten.MainActivity
 import com.guidoroos.recepten.R
-import com.guidoroos.recepten.databinding.EditRecipeFragmentBinding.inflate
 import com.guidoroos.recepten.databinding.RecipeFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RecipeFragment : Fragment() {
+class EditRecipeFragment : Fragment() {
 
 
     private val viewModel: RecipeViewModel by viewModels()
@@ -28,17 +27,21 @@ class RecipeFragment : Fragment() {
     ): View {
         binding = RecipeFragmentBinding.inflate(layoutInflater, container, false)
 
+        binding.recipe = args.recipe
+
         val navController = findNavController()
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
 
-        binding.recipe = args.recipe
-
-        binding.toolbar.inflateMenu(R.menu.menu_modify)
+        binding.toolbar.inflateMenu(R.menu.menu_modify_finish)
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.modify_icon -> {
-                    findNavController().navigate(RecipeFragmentDirections.actionRecipeFragmentToEditRecipeFragment(args.recipe))
+                R.id.cancel_icon -> {
+                    findNavController().navigate(EditRecipeFragmentDirections.actionEditRecipeFragmentToRecipeFragment(args.recipe))
+                    true
+                }
+                R.id.finish_icon -> {
+                    findNavController().navigate(EditRecipeFragmentDirections.actionEditRecipeFragmentToRecipeFragment(args.recipe))
                     true
                 }
                 else -> {
@@ -53,8 +56,6 @@ class RecipeFragment : Fragment() {
     private fun navigateToEditRecipeFragment() {
 
     }
-
-
 
 
 }

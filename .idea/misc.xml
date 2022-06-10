@@ -10,6 +10,7 @@
         <entry key="app/src/main/res/drawable/ic_book.xml" value="0.1755" />
         <entry key="app/src/main/res/drawable/ic_category.xml" value="0.1755" />
         <entry key="app/src/main/res/drawable/ic_clear.xml" value="0.2305" />
+        <entry key="app/src/main/res/drawable/ic_clear_filter.xml" value="0.2195" />
         <entry key="app/src/main/res/drawable/ic_clock.xml" value="0.1755" />
         <entry key="app/src/main/res/drawable/ic_event.xml" value="0.1985" />
         <entry key="app/src/main/res/drawable/ic_filter-cross.xml" value="0.1985" />
@@ -18,11 +19,14 @@
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1755" />
         <entry key="app/src/main/res/drawable/ic_list.xml" value="0.128" />
         <entry key="app/src/main/res/drawable/ic_location.xml" value="0.1755" />
+        <entry key="app/src/main/res/drawable/ic_modify.xml" value="0.2195" />
+        <entry key="app/src/main/res/drawable/ic_modify_finish.xml" value="0.1985" />
         <entry key="app/src/main/res/drawable/ic_settings.xml" value="0.1755" />
         <entry key="app/src/main/res/drawable/ic_star.xml" value="0.1755" />
         <entry key="app/src/main/res/drawable/ic_star_no_bg.xml" value="0.219" />
         <entry key="app/src/main/res/drawable/pasta_svgrepo_com.xml" value="0.2305" />
         <entry key="app/src/main/res/drawable/round_outline.xml" value="0.2325" />
+        <entry key="app/src/main/res/layout/edit_recipe_fragment.xml" value="0.190625" />
         <entry key="app/src/main/res/layout/filter_detail_image_item.xml" value="0.3016304347826087" />
         <entry key="app/src/main/res/layout/filter_detail_image_item_layout.xml" value="0.33" />
         <entry key="app/src/main/res/layout/filter_detail_item.xml" value="0.3016304347826087" />
@@ -36,9 +40,11 @@
         <entry key="app/src/main/res/layout/recipe_filter_fragment.xml" value="0.16847826086956522" />
         <entry key="app/src/main/res/layout/recipe_fragment.xml" value="0.33" />
         <entry key="app/src/main/res/layout/recipe_item.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/recipe_overview_fragment.xml" value="0.3016304347826087" />
+        <entry key="app/src/main/res/layout/recipe_overview_fragment.xml" value="0.1" />
         <entry key="app/src/main/res/menu/menu_bottom_nav.xml" value="0.23958333333333334" />
         <entry key="app/src/main/res/menu/menu_filter.xml" value="2.0785714285714287" />
+        <entry key="app/src/main/res/menu/menu_modify.xml" value="0.3333333333333333" />
+        <entry key="app/src/main/res/menu/menu_modify_finish.xml" value="0.190625" />
       </map>
     </option>
   </component>

@@ -7,12 +7,10 @@ import android.view.*
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.guidoroos.recepten.R
 import com.guidoroos.recepten.databinding.RecipeFilterFragmentBinding
-import com.guidoroos.recepten.filter.model.Filter
-import com.guidoroos.recepten.filter.model.FilterItem
-import com.guidoroos.recepten.filter.model.FilterTimeUnit
-import com.guidoroos.recepten.filter.model.FilterType
+import com.guidoroos.recepten.filter.model.*
 import com.guidoroos.recepten.main.viewmodel.RecipeOverviewViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,9 +36,9 @@ class RecipeFilterFragment : Fragment() {
         detailAdapter =
             RecipeFilterDetailAdapter(RecipeFilterDetailAdapter.FilterDetailItemListener { filterItem ->
                 val filter = Filter(this.filterType, filterItem.filterItemValue)
-
                 viewModel.setFilter(filter)
-                this.parentFragmentManager.popBackStack()
+                findNavController().navigate(R.id.action_recipeFilterFragment_to_recipeOverviewFragment)
+
             }
             )
 
@@ -88,7 +86,7 @@ class RecipeFilterFragment : Fragment() {
                 val list = viewModel.timeFilterData.map { item ->
                     val name = getString(item.nameResourceId)
                     val time = getMilliSecondsFromTimeUnit(item)
-                    FilterItem(name, time)
+                    FilterItem(name, FilterValueLong(time))
                 }
                 detailAdapter.submitList(list)
             }

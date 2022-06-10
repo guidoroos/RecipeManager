@@ -3,10 +3,13 @@ package com.guidoroos.recepten
 import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.Window
+import androidx.annotation.IdRes
+import androidx.annotation.MenuRes
 import androidx.annotation.NonNull
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
@@ -27,28 +30,16 @@ class MainActivity : AppCompatActivity() {
         binding = MainActivityBinding.inflate(layoutInflater)
         binding.bottomNav.itemIconTintList = null
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         val navController = navHostFragment.navController
         binding.bottomNav.setupWithNavController(navController)
 
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
-
-        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
-
-
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-
-            if(destination.id == R.id.recipeFilterFragment) {
-                binding.toolbar.visibility = GONE
-            } else {
-                binding.toolbar.visibility = VISIBLE
-            }
-        }
         setContentView(binding.root)
-
-
-
     }
+
+
+
 
 
 }

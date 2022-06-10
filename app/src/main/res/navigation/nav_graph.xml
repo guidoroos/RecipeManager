@@ -33,9 +33,32 @@
         <argument
             android:name="recipe"
             app:argType="com.guidoroos.recepten.db.Recipe" />
+        <action
+            android:id="@+id/action_recipeFragment_to_editRecipeFragment"
+            app:destination="@id/editRecipeFragment"
+            app:popUpTo="@id/recipeOverviewFragment" />
     </fragment>
     <fragment
         android:id="@+id/recipeFilterFragment"
         android:name="com.guidoroos.recepten.filter.ui.RecipeFilterFragment"
-        android:label="RecipeFilterFragment" />
+        android:label="RecipeFilterFragment" >
+        <action
+            android:id="@+id/action_recipeFilterFragment_to_recipeOverviewFragment"
+            app:destination="@id/recipeOverviewFragment"
+            app:popUpTo="@id/recipeOverviewFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/editRecipeFragment"
+        android:name="com.guidoroos.recepten.recipe.EditRecipeFragment"
+        android:label="EditRecipeFragment" >
+        <argument
+            android:name="recipe"
+            app:argType="com.guidoroos.recepten.db.Recipe" />
+        <action
+            android:id="@+id/action_editRecipeFragment_to_recipeFragment"
+            app:destination="@id/recipeFragment"
+            app:popUpTo="@id/recipeOverviewFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

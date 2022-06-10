@@ -9,21 +9,14 @@ import com.guidoroos.recepten.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-//exportschema is for archiving schema, version need update when update db
-//volatile means no caching, so all threads from one place so same values
-//synchronized means lock for access
-//.fallbackToDestructiveMigration() can be replaced by migration strategy
-
-
 @Database(
-    entities = [Cuisine::class,
+    entities = [
         GroceryList::class,
         Ingredient::class,
         Item::class,
         ItemType::class,
         Recipe::class,
         RecipeIngredient::class,
-        RecipeType::class,
         Step::class,
         Unit::class,
         UnitType::class],
@@ -38,7 +31,7 @@ abstract class RecipeDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: RecipeDatabase? = null
 
-        fun getInstance(context: Context,  scope: CoroutineScope): RecipeDatabase {
+        fun getInstance(context: Context, scope: CoroutineScope): RecipeDatabase {
             synchronized(this) {
                 var instance = INSTANCE
 
@@ -68,52 +61,29 @@ abstract class RecipeDatabase : RoomDatabase() {
                 scope.launch {
                     val recipeDao = database.recipeDao
 
-                    recipeDao.apply {
-
-                        insertAll(
-                            RecipeType(name = "Breakfast"),
-                            RecipeType(name = "Lunch"),
-                            RecipeType(name = "Dinner"),
+                    recipeDao.insert(
+                        Recipe(
+                            title = "Pasta Bolognese",
+                            imageResourceId = R.drawable.pasta,
+                            description = "Italian Pasta",
+                            cuisine = "Italian",
+                            recipeType = "Dinner",
+                            level = 1,
+                            minutesDuration = 25
                         )
+                    )
 
-                        insert(
-                            Cuisine(
-                                name = "Italian",
-                                imageResourceId = R.drawable.italian_flag
-                            )
+                    recipeDao.insert(
+                        Recipe(
+                            title = "Indian Curry",
+                            imageResourceId = R.drawable.curry,
+                            description = "Hot and spicy",
+                            cuisine = "Indian",
+                            recipeType = "Dinner",
+                            level = 2,
+                            minutesDuration = 40
                         )
-                        insert(
-                            Cuisine(
-                                name = "Indian",
-                                imageResourceId = R.drawable.indian_flag
-                            )
-                        )
-
-
-                        recipeDao.insert(
-                            Recipe(
-                                title = "Pasta Bolognese",
-                                imageResourceId = R.drawable.pasta,
-                                description = "Italian Pasta",
-                                cuisineId = getCuisineId("Italian"),
-                                recipeTypeId = getRecipeTypeId("Dinner"),
-                                level = 1,
-                                minutesDuration = 25
-                            )
-                        )
-
-                        recipeDao.insert(
-                            Recipe(
-                                title = "Indian Curry",
-                                imageResourceId = R.drawable.curry,
-                                description = "Hot and spicy",
-                                cuisineId = getCuisineId("Indian"),
-                                recipeTypeId = getRecipeTypeId("Dinner"),
-                                level = 2,
-                                minutesDuration = 40
-                            )
-                        )
-                    }
+                    )
                 }
             }
         }
