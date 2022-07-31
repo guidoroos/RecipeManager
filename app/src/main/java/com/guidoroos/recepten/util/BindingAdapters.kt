@@ -7,6 +7,7 @@ import androidx.annotation.DrawableRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.guidoroos.recepten.R
@@ -27,13 +28,23 @@ fun loadImage(
 @BindingAdapter("imageResource")
 fun imageResourceOrPlaceholder(
     view: ImageView,
-    @DrawableRes imageResource: Int?
+    @DrawableRes imageUri: String?
 ) {
-    if (imageResource == null) {
-        view.setImageResource(R.drawable.ic_baseline_local_dining_24)
-    } else {
-        val drawable = AppCompatResources.getDrawable(view.context,imageResource)
-        view.setImageDrawable(drawable)
+    when (imageUri) {
+        null -> {
+            view.setImageResource(R.drawable.ic_baseline_local_dining_24)
+        }
+        "example_pasta" -> {
+            val drawable = AppCompatResources.getDrawable(view.context, R.drawable.pasta)
+            view.setImageDrawable(drawable)
+        }
+        "example_curry" -> {
+            val drawable = AppCompatResources.getDrawable(view.context, R.drawable.curry)
+            view.setImageDrawable(drawable)
+        }
+        else -> {
+            view.setImageURI(imageUri.toUri())
+        }
     }
 }
 

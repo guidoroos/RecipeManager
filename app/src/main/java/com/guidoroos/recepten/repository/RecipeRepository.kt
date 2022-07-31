@@ -11,10 +11,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
-class RecipeRepository @Inject constructor(dao: RecipeDao) {
+class RecipeRepository @Inject constructor(private val dao: RecipeDao) {
 
     val allRecipes:Flow<List<Recipe>> = dao.getAllRecipes()
 
+    suspend fun storeRecipe (recipe:Recipe) {
+        dao.insert(recipe)
+    }
 
     fun getAllRecipeTypes(): Flow<List<FilterItem>> {
         return allRecipes.map { list ->
