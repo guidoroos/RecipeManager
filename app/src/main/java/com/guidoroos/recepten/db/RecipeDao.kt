@@ -7,10 +7,18 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface RecipeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(recipe: Recipe )
+    suspend fun insertRecipe(recipe: Recipe )
+
+    @Update
+    suspend fun updateRecipe(recipe: Recipe)
+
+    @Delete
+    suspend fun deleteRecipe(recipe: Recipe)
 
     @Query("SELECT * FROM recipe ORDER BY title")
     fun getAllRecipes(): Flow<List<Recipe>>
+
+
 
 //
 //    @Update

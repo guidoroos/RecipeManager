@@ -1,6 +1,6 @@
 package com.guidoroos.recepten.grocery
 
-import androidx.lifecycle.ViewModelProvider
+
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,11 +10,6 @@ import com.guidoroos.recepten.R
 
 class GroceryFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = GroceryFragment()
-    }
-
-    private lateinit var viewModel: GroceryViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,10 +18,6 @@ class GroceryFragment : Fragment() {
         return inflater.inflate(R.layout.grocery_fragment, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(GroceryViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
+
 
 }

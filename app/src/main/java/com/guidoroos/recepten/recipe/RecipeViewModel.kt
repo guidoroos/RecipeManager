@@ -5,19 +5,33 @@ import androidx.lifecycle.viewModelScope
 import com.guidoroos.recepten.db.Recipe
 import com.guidoroos.recepten.repository.RecipeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class RecipeViewModel @Inject constructor(private val repository: RecipeRepository):
     ViewModel()   {
 
-        fun storeRecipe (recipe: Recipe) {
-            viewModelScope.launch {
-                repository.storeRecipe(recipe)
-            }
-        }
+    var currentPhotoPath: String? = null
+    var minutesDuration: Int = 0
+    var isFavorite: Boolean = false
+    var levelSelected: Int = 0
 
+    fun storeRecipe(recipe: Recipe) {
+        viewModelScope.launch {
+            repository.storeRecipe(recipe)
+        }
+    }
+
+    fun updateRecipe(recipe: Recipe) {
+        viewModelScope.launch {
+            repository.updateRecipe(recipe)
+        }
+    }
+
+    fun deleteRecipe(recipe: Recipe) {
+        viewModelScope.launch {
+            repository.deleteRecipe(recipe)
+        }
+    }
 }

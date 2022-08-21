@@ -1,6 +1,13 @@
 package com.guidoroos.recepten.util
 
+import android.content.ContentProvider
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
 import android.graphics.drawable.Drawable
+import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
@@ -11,6 +18,7 @@ import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.guidoroos.recepten.R
+import java.io.File
 
 
 @BindingAdapter("imageUrl")
@@ -43,7 +51,10 @@ fun imageResourceOrPlaceholder(
             view.setImageDrawable(drawable)
         }
         else -> {
-            view.setImageURI(imageUri.toUri())
+            val imageBitmap = getCapturedImage(view.context, Uri.fromFile(
+                File(imageUri)
+            ))
+            view.setImageBitmap(imageBitmap)
         }
     }
 }
@@ -57,7 +68,7 @@ fun setFilled(
         val color = ContextCompat.getColor(view.context,R.color.primaryColor)
         view.setColorFilter(color)
     } else {
-        val color = ContextCompat.getColor(view.context,R.color.primaryTextColor)
+        val color = ContextCompat.getColor(view.context,R.color.cardview_shadow_end_color)
         view.setColorFilter(color)
     }
 }
@@ -80,8 +91,28 @@ fun setDurationText(
     view: TextView,
     minutes:Int
 ) {
-    val text = "$minutes minutes"
-    view.text = text
+    if (minutes < 60) {
+        val text = "$minutes minutes"
+        view.text = text
+    }
+    else {
+        val text = "${minutes / 60}:${minutes % 60} hours"
+        view.text = text
+    }
+
+}
+
+private fun getCapturedImage(context: Context, selectedPhotoUri: Uri): Bitmap {
+    return when {
+        Build.VERSION.SDK_INT < 28 -> MediaStore.Images.Media.getBitmap(
+            context.contentResolver,
+            selectedPhotoUri
+        )
+        else -> {
+            val source = ImageDecoder.createSource(context.contentResolver, selectedPhotoUri)
+            ImageDecoder.decodeBitmap(source)
+        }
+    }
 }
 
 

@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
@@ -25,9 +26,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_KEYBOARD
+import com.google.android.material.timepicker.TimeFormat
 import com.guidoroos.recepten.R
 import com.guidoroos.recepten.databinding.EditRecipeFragmentBinding
 import com.guidoroos.recepten.db.Recipe
+import com.guidoroos.recepten.util.setDurationText
+import com.guidoroos.recepten.util.setFilled
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.IOException
@@ -41,29 +47,18 @@ private const val MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 100
 
 
 @AndroidEntryPoint
-class EditRecipeFragment : Fragment() {
+class EditRecipeFragment : Fragment(), View.OnClickListener {
     enum class Mode { ADD, EDIT }
 
     private val viewModel: RecipeViewModel by viewModels()
     private lateinit var binding: EditRecipeFragmentBinding
-    private var currentPhotoPath: String? = null
     private val args: RecipeFragmentArgs by navArgs()
     private lateinit var mode: Mode
-
-    private val imageRequest =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == RESULT_OK) {
-                val intent = it.data ?: return@registerForActivityResult
-                val imageUri = intent.data
-                currentPhotoPath = imageUri.toString()
-                binding.recipePhoto.setImageURI(imageUri)
-            }
-        }
 
     private val takePhotoRequest =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == RESULT_OK) {
-                binding.recipePhoto.setImageURI(currentPhotoPath?.toUri())
+                binding.recipePhoto.setImageURI(viewModel.currentPhotoPath?.toUri())
                 addPictureToGallery()
             }
         }
@@ -76,6 +71,9 @@ class EditRecipeFragment : Fragment() {
 
         mode = if (args.recipe == null) Mode.ADD else Mode.EDIT
         binding.recipe = args.recipe
+        viewModel.levelSelected = args.recipe?.level ?: 0
+        viewModel.minutesDuration = args.recipe?.minutesDuration ?: 0
+        viewModel.currentPhotoPath = args.recipe?.imageResourceUri
 
         val navController = findNavController()
         val appBarConfiguration = AppBarConfiguration(navController.graph)
@@ -86,37 +84,38 @@ class EditRecipeFragment : Fragment() {
             when (it.itemId) {
                 R.id.cancel_icon -> {
                     if (mode == Mode.EDIT) {
-                        findNavController().navigate(
-                            EditRecipeFragmentDirections.actionEditRecipeFragmentToRecipeFragment(
-                                args.recipe
-                            )
-                        )
+                            findNavController().popBackStack(R.id.recipeFragment,false)
                     } else {
-                        findNavController().navigate(
-                            EditRecipeFragmentDirections.actionEditRecipeFragmentToRecipeOverviewFragment()
-                        )
+                        findNavController().popBackStack(R.id.recipeOverviewFragment,false)
                     }
                     true
                 }
                 R.id.finish_icon -> {
                     val recipe = Recipe(
-                        title = "dummy",
-                        imageResourceUri = currentPhotoPath,
-                        description = binding.descriptionTextView.text.toString(),
+                        title = binding.titleText.text.toString(),
+                        imageResourceUri = viewModel.currentPhotoPath,
+                        description = binding.descriptionEdittext.text.toString(),
                         cuisine = binding.countryEdittext.text.toString(),
-                        recipeType = binding.recipeTypeTextView.text.toString(),
-                        level = 1,
-                        minutesDuration = 10
+                        recipeType = binding.recipeTypeEdittext.text.toString(),
+                        level = viewModel.levelSelected,
+                        minutesDuration = viewModel.minutesDuration,
+                        isFavorite = viewModel.isFavorite
                     )
 
-                    viewModel.storeRecipe(recipe)
-                    addPictureToGallery()
+                    if (mode == Mode.ADD) {
+                        viewModel.storeRecipe(recipe)
+                        findNavController().navigate(EditRecipeFragmentDirections.actionEditRecipeFragmentToRecipeFragment(recipe))
 
-                    findNavController().navigate(
-                        EditRecipeFragmentDirections.actionEditRecipeFragmentToRecipeFragment(
-                            recipe
-                        )
-                    )
+                    } else {
+                        recipe.id = args.recipe?.id ?: 0
+                        viewModel.updateRecipe(recipe)
+                        navController.previousBackStackEntry?.savedStateHandle?.set("recipe", recipe)
+                        findNavController().popBackStack(R.id.recipeFragment,false)
+                    }
+
+                    navController.previousBackStackEntry?.savedStateHandle?.set("recipe", recipe)
+                    findNavController().popBackStack(R.id.recipeFragment,false)
+
                     true
                 }
                 else -> {
@@ -124,48 +123,15 @@ class EditRecipeFragment : Fragment() {
                 }
             }
         }
-        binding.recipePhoto.setOnClickListener {
-            AlertDialog.Builder(requireContext())
-                .setTitle(R.string.add_image)
-                .setMessage(R.string.select_option)
-                .setPositiveButton(
-                    R.string.image_from_device
-                ) { _, _ ->
-                    if (ContextCompat.checkSelfPermission(
-                            requireActivity(),
-                            Manifest.permission.READ_EXTERNAL_STORAGE
-                        )
-                        != PackageManager.PERMISSION_GRANTED
-                    ) {
-                        ActivityCompat.requestPermissions(
-                            requireActivity(),
-                            listOf(Manifest.permission.READ_EXTERNAL_STORAGE).toTypedArray(),
-                            MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE
-                        )
-                    } else {
-                        val intent = Intent(
-                            Intent.ACTION_PICK,
-                            MediaStore.Images.Media.INTERNAL_CONTENT_URI
-                        )
-                        imageRequest.launch(intent)
-                    }
-                }
-                .setNegativeButton(
-                    R.string.image_from_photo
-                ) { _, _ ->
-                    if (requireContext().packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
-                        dispatchTakePictureIntent()
-                    } else {
-                        Toast.makeText(requireContext(), R.string.no_camera, Toast.LENGTH_LONG)
-                            .show()
-                    }
-                }
-                .setNeutralButton(R.string.cancel)
-                { _, _ ->
-                    //just dismiss
-                }
-                .show()
-        }
+
+        binding.starImage1.setOnClickListener(this)
+        binding.starImage2.setOnClickListener(this)
+        binding.starImage3.setOnClickListener(this)
+        binding.likeImage.setOnClickListener(this)
+        binding.durationImage.setOnClickListener(this)
+        binding.durationTextView.setOnClickListener(this)
+        binding.recipePhoto.setOnClickListener(this)
+
 
         return binding.root
     }
@@ -179,7 +145,7 @@ class EditRecipeFragment : Fragment() {
             ".jpg",
             storageDir
         ).apply {
-            currentPhotoPath = absolutePath
+            viewModel.currentPhotoPath = absolutePath
         }
     }
 
@@ -207,17 +173,84 @@ class EditRecipeFragment : Fragment() {
 
 
     private fun addPictureToGallery() {
-       val file = File(currentPhotoPath ?: return)
+       val file = File(viewModel.currentPhotoPath ?: return)
        MediaScannerConnection.scanFile(context, arrayOf(file.toString()),
             null, null)
     }
 
+    override fun onClick(view: View?) {
+        when (view) {
+            binding.starImage1 -> {
+                viewModel.levelSelected = 1
+                setFilled(binding.starImage1, true)
+                setFilled(binding.starImage2, false)
+                setFilled(binding.starImage3, false)
+            }
+            binding.starImage2 -> {
+                viewModel.levelSelected = 2
+                setFilled(binding.starImage1, true)
+                setFilled(binding.starImage2, true)
+                setFilled(binding.starImage3, false)
+            }
+            binding.starImage3 -> {
+                viewModel.levelSelected = 3
+                setFilled(binding.starImage1, true)
+                setFilled(binding.starImage2, true)
+                setFilled(binding.starImage3, true)
+            }
+            binding.recipePhoto -> {
+                handlePhotoClick()
+            }
+            binding.likeImage -> {
+                viewModel.isFavorite = !viewModel.isFavorite
+                setFilled (binding.likeImage, !viewModel.isFavorite)
+            }
+            binding.durationImage, binding.durationTextView -> {
+                showTimePicker()
+            }
 
+        }
+    }
 
+    private fun showTimePicker() {
+        val picker =
+            MaterialTimePicker.Builder()
+                .setTimeFormat(TimeFormat.CLOCK_24H)
+                .setHour(0)
+                .setMinute(viewModel.minutesDuration)
+                .setTitleText(R.string.setDuration)
+                .setInputMode(INPUT_MODE_KEYBOARD)
+                .build()
 
+        picker.addOnPositiveButtonClickListener {
+            val minutes = picker.hour * 60 + picker.minute
+            setDurationText(binding.durationTextView, minutes)
+            viewModel.minutesDuration = minutes
+        }
 
-    private fun navigateToEditRecipeFragment() {
+        picker.show(parentFragmentManager, "tag");
+    }
 
+    private fun handlePhotoClick() {
+        if (ContextCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                listOf(Manifest.permission.READ_EXTERNAL_STORAGE).toTypedArray(),
+                MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE
+            )
+        } else {
+            if (requireContext().packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
+                dispatchTakePictureIntent()
+            } else {
+                Toast.makeText(requireContext(), R.string.no_camera, Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
     }
 
 

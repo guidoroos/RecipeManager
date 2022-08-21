@@ -12,6 +12,7 @@ import com.guidoroos.recepten.MainActivity
 import com.guidoroos.recepten.R
 import com.guidoroos.recepten.databinding.EditRecipeFragmentBinding.inflate
 import com.guidoroos.recepten.databinding.RecipeFragmentBinding
+import com.guidoroos.recepten.db.Recipe
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -41,6 +42,14 @@ class RecipeFragment : Fragment() {
                     findNavController().navigate(RecipeFragmentDirections.actionRecipeFragmentToEditRecipeFragment(args.recipe))
                     true
                 }
+                R.id.delete_icon -> {
+                    args.recipe?.let{ recipe ->
+                        viewModel.deleteRecipe(recipe)
+                    }
+
+                    findNavController().popBackStack(R.id.recipeOverviewFragment,false)
+                    true
+                }
                 else -> {
                     true
                 }
@@ -49,12 +58,14 @@ class RecipeFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val navController = findNavController()
 
-    private fun navigateToEditRecipeFragment() {
-
+        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<Recipe>("recipe")
+            ?.observe(viewLifecycleOwner) { updatedRecipe ->
+                binding.recipe = updatedRecipe
+            }
     }
-
-
 
 
 }

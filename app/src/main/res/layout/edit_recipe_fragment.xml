@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="recipe"
             type="com.guidoroos.recepten.db.Recipe" />
@@ -16,22 +17,19 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
-            app:title="@{recipe.title}"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
-            app:titleTextColor="@android:color/white"
-            app:theme = "@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            />
+            app:layout_constraintTop_toTopOf="parent"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:titleTextColor="@android:color/white" />
 
         <ImageView
             android:id="@+id/recipe_photo"
-            android:layout_width="0dp"
-            android:layout_height="300dp"
-            android:layout_marginStart="@dimen/margin_large"
-            android:layout_marginTop="@dimen/margin_extra_large"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="@dimen/margin_medium"
             android:layout_marginEnd="@dimen/margin_large"
             android:scaleType="centerCrop"
             app:imageResource="@{recipe.imageResourceUri}"
@@ -42,73 +40,96 @@
 
         <ImageView
             android:id="@+id/like_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium"
-            android:layout_marginEnd="@dimen/margin_medium"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_small"
             android:src="@drawable/favorite"
             app:layout_constraintEnd_toEndOf="@+id/recipe_photo"
             app:layout_constraintTop_toTopOf="@+id/recipe_photo"
             app:setFilled="@{recipe.isFavorite}" />
 
-        <ImageView
-            android:id="@+id/location_image"
-            android:layout_width="@dimen/margin_large"
-            android:layout_height="@dimen/margin_large"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:layout_marginTop="@dimen/margin_medium"
-            android:src="@drawable/ic_location"
-            app:layout_constraintStart_toStartOf="@+id/recipe_photo"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_type_image"
-            app:tint="@color/primaryColor" />
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/country_edittext"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/title_inputLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:layout_marginEnd="@dimen/margin_medium"
-            app:layout_constraintBottom_toBottomOf="@+id/location_image"
-            app:layout_constraintEnd_toStartOf="@+id/level_textView"
-            app:layout_constraintStart_toEndOf="@+id/recipe_type_image"
-            app:layout_constraintTop_toTopOf="@+id/location_image"
-            tools:text="Italy" />
-
-        <ImageView
-            android:id="@+id/recipe_type_image"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_medium"
-            android:layout_marginTop="@dimen/margin_default"
-            android:src="@drawable/ic_baseline_local_dining_24"
-            app:layout_constraintStart_toStartOf="@+id/recipe_photo"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_photo"
-            app:tint="@color/primaryColor" />
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:hint="@string/title"
+            app:endIconMode="clear_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recipe_photo">
 
-        <TextView
-            android:id="@+id/recipe_type_textView"
-            style="@style/normal_textview"
-            android:layout_width="0dp"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/titleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:ellipsize="end"
+                android:maxLength="30"
+                android:singleLine="true"
+                android:text="@{recipe.title}"
+                app:tint="@color/primaryColor"
+                tools:text="Pasta Bolognese ExtraVaganza ExtraSpeziale" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/country_inputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_medium"
             android:layout_marginEnd="@dimen/margin_medium"
-            app:layout_constraintBottom_toBottomOf="@+id/recipe_type_image"
-            app:layout_constraintEnd_toStartOf="@+id/duration_image"
-            app:layout_constraintStart_toEndOf="@+id/recipe_type_image"
-            app:layout_constraintTop_toTopOf="@+id/recipe_type_image"
-            tools:text="Main Course" />
+            android:hint="@string/origin"
+            app:endIconMode="clear_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_inputLayout"
+            app:startIconDrawable="@drawable/ic_location">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/country_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{recipe.cuisine}"
+                android:singleLine="true"
+                tools:text="Italy" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/recipe_type_inputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:hint="@string/recipe_type"
+            app:endIconMode="clear_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/country_inputLayout"
+            app:startIconDrawable="@drawable/ic_baseline_local_dining_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/recipe_type_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{recipe.recipeType}"
+                android:singleLine="true"
+                tools:text="Main Course" />
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <ImageView
             android:id="@+id/duration_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_extra_large"
-            android:layout_marginTop="@dimen/margin_default"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/ic_clock"
-            app:layout_constraintEnd_toEndOf="@+id/recipe_photo"
-            app:layout_constraintStart_toStartOf="@+id/recipe_photo"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_photo"
+            android:layout_marginStart="@dimen/margin_extra_large"
+            app:layout_constraintBottom_toTopOf="@+id/description_inputLayout"
+            app:layout_constraintStart_toEndOf="@+id/star_image3"
+            app:layout_constraintTop_toBottomOf="@+id/recipe_type_inputLayout"
             app:tint="@color/primaryColor" />
 
 
@@ -129,85 +150,73 @@
             style="@style/normal_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginTop="@dimen/margin_default"
             android:text="@string/level"
-            app:layout_constraintStart_toStartOf="@+id/duration_image"
-            app:layout_constraintTop_toBottomOf="@+id/duration_image" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recipe_type_inputLayout" />
 
         <ImageView
-            android:id="@+id/start_image1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/star_image1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginStart="@dimen/margin_medium"
             android:src="@drawable/ic_star_no_bg"
+            app:layout_constraintBottom_toTopOf="@+id/description_inputLayout"
             app:layout_constraintStart_toEndOf="@+id/level_textView"
-            app:layout_constraintTop_toTopOf="@+id/level_textView"
+            app:layout_constraintTop_toBottomOf="@+id/recipe_type_inputLayout"
             app:starLevel="@{recipe.level}"
             app:starNumber="@{1}" />
 
         <ImageView
             android:id="@+id/star_image2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginStart="@dimen/margin_medium"
             android:src="@drawable/ic_star_no_bg"
-            app:layout_constraintStart_toEndOf="@+id/start_image1"
-            app:layout_constraintTop_toTopOf="@+id/level_textView"
+            app:layout_constraintBottom_toTopOf="@+id/description_inputLayout"
+            app:layout_constraintStart_toEndOf="@+id/star_image1"
+            app:layout_constraintTop_toBottomOf="@+id/recipe_type_inputLayout"
             app:starLevel="@{recipe.level}"
             app:starNumber="@{2}" />
 
         <ImageView
-            android:id="@+id/starImage3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/star_image3"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginStart="@dimen/margin_medium"
             android:src="@drawable/ic_star_no_bg"
+            app:layout_constraintBottom_toTopOf="@+id/description_inputLayout"
             app:layout_constraintStart_toEndOf="@+id/star_image2"
-            app:layout_constraintTop_toTopOf="@+id/level_textView"
+            app:layout_constraintTop_toBottomOf="@+id/recipe_type_inputLayout"
             app:starLevel="@{recipe.level}"
             app:starNumber="@{3}" />
 
-        <TextView
-            android:id="@+id/description_textView"
-            style="@style/normal_textview"
-            android:text = "@{recipe.description}"
-            android:layout_width="0dp"
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/description_inputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginStart="@dimen/margin_large"
-            android:layout_marginTop="@dimen/margin_large"
-            android:layout_marginEnd="@dimen/margin_default"
-            android:layout_marginBottom="@dimen/margin_large"
-            app:layout_constraintBottom_toTopOf="@+id/button_ingredients"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/level_textView"
-            tools:text="A simple recipe for classic Italian pasta" />
-
-        <Button
-            android:id="@+id/button_ingredients"
-            style="@style/buttonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_medium"
-            android:layout_marginBottom="@dimen/margin_large"
-            android:text="@string/ingredients"
+            android:layout_marginTop="@dimen/margin_default"
+            android:layout_marginBottom="@dimen/margin_default"
+            android:hint="@string/description"
+            app:endIconMode="clear_text"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button_steps"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/level_textView">
 
-        <Button
-            android:id="@+id/button_steps"
-            style="@style/buttonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_medium"
-            android:layout_marginBottom="@dimen/margin_large"
-            android:text="@string/steps"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button_ingredients" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/description_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ellipsize="end"
+                android:gravity="top"
+                android:text="@{recipe.description}"
+                tools:text="A simple recipe for classic Italian pasta" />
+        </com.google.android.material.textfield.TextInputLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

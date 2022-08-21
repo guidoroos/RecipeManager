@@ -8,4 +8,10 @@
         android:enabled="true"
         app:showAsAction="ifRoom"
         android:title="" />
+    <item
+        android:id="@+id/delete_icon"
+        android:icon="@drawable/ic_delete"
+        android:enabled="true"
+        app:showAsAction="ifRoom"
+        android:title="" />
 </menu>

@@ -15,10 +15,6 @@ class RecipeRepository @Inject constructor(private val dao: RecipeDao) {
 
     val allRecipes:Flow<List<Recipe>> = dao.getAllRecipes()
 
-    suspend fun storeRecipe (recipe:Recipe) {
-        dao.insert(recipe)
-    }
-
     fun getAllRecipeTypes(): Flow<List<FilterItem>> {
         return allRecipes.map { list ->
         list.distinctBy { it.recipeType }
@@ -31,6 +27,18 @@ class RecipeRepository @Inject constructor(private val dao: RecipeDao) {
             list.distinctBy { it.cuisine }
                 .map {FilterItem(it.cuisine,FilterValueString(it.cuisine))}
         }
+    }
+
+    suspend fun storeRecipe (recipe:Recipe) {
+        dao.insertRecipe(recipe)
+    }
+
+    suspend fun updateRecipe (recipe:Recipe) {
+        dao.updateRecipe(recipe)
+    }
+
+    suspend fun deleteRecipe(recipe:Recipe) {
+        dao.deleteRecipe(recipe)
     }
 
 

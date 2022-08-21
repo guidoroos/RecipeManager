@@ -61,7 +61,7 @@ abstract class RecipeDatabase : RoomDatabase() {
                 scope.launch {
                     val recipeDao = database.recipeDao
 
-                    recipeDao.insert(
+                    recipeDao.insertRecipe(
                         Recipe(
                             title = "Pasta Bolognese",
                             imageResourceUri = "example_pasta",
@@ -73,7 +73,7 @@ abstract class RecipeDatabase : RoomDatabase() {
                         )
                     )
 
-                    recipeDao.insert(
+                    recipeDao.insertRecipe(
                         Recipe(
                             title = "Indian Curry",
                             imageResourceUri = "example_curry",
