@@ -20,9 +20,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class RecipeHostFragment : Fragment() {
 
-    private val viewModel: RecipeViewModel by viewModels()
     private lateinit var binding: RecipeHostFragmentBinding
-    private val args:RecipeFragmentArgs by navArgs()
+    private val args:RecipeHostFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
