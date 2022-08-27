@@ -14,18 +14,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_KEYBOARD
 import com.google.android.material.timepicker.TimeFormat
@@ -50,10 +47,10 @@ private const val MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 100
 class EditRecipeFragment : Fragment(), View.OnClickListener {
     enum class Mode { ADD, EDIT }
 
-    private val viewModel: RecipeViewModel by viewModels()
+    private val viewModel: RecipeViewModel by activityViewModels()
     private lateinit var binding: EditRecipeFragmentBinding
-    private val args: RecipeFragmentArgs by navArgs()
     private lateinit var mode: Mode
+    private var recipe: Recipe? = null
 
     private val takePhotoRequest =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -69,57 +66,55 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
     ): View {
         binding = EditRecipeFragmentBinding.inflate(layoutInflater, container, false)
 
-        mode = if (args.recipe == null) Mode.ADD else Mode.EDIT
-        binding.recipe = args.recipe
-        viewModel.levelSelected = args.recipe?.level ?: 0
-        viewModel.minutesDuration = args.recipe?.minutesDuration ?: 0
-        viewModel.currentPhotoPath = args.recipe?.imageResourceUri
+        recipe = arguments?.getParcelable("recipe")
 
-        val navController = findNavController()
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
-        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
+        mode = if (recipe == null) Mode.ADD else Mode.EDIT
 
-        binding.toolbar.inflateMenu(R.menu.menu_modify_finish)
-        binding.toolbar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.cancel_icon -> {
-                    if (mode == Mode.EDIT) {
-                            findNavController().popBackStack(R.id.recipeFragment,false)
-                    } else {
-                        findNavController().popBackStack(R.id.recipeOverviewFragment,false)
+        binding.recipe = recipe
+        viewModel.levelSelected = recipe?.level ?: 0
+        viewModel.minutesDuration = recipe?.minutesDuration ?: 0
+        viewModel.currentPhotoPath = recipe?.imageResourceUri
+
+        val toolbar = requireParentFragment().view?.findViewById<MaterialToolbar>(R.id.toolbar)
+        toolbar?.apply {
+            title = if (mode == Mode.ADD) getString(R.string.create_recipe) else getString(R.string.update_recipe)
+            inflateMenu(R.menu.menu_modify_finish)
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.cancel_icon -> {
+                        if (mode == Mode.EDIT) {
+                            findNavController().popBackStack(R.id.recipeHostFragment, false)
+                        } else {
+                            findNavController().popBackStack(R.id.recipeOverviewFragment, false)
+                        }
+                        true
                     }
-                    true
-                }
-                R.id.finish_icon -> {
-                    val recipe = Recipe(
-                        title = binding.titleText.text.toString(),
-                        imageResourceUri = viewModel.currentPhotoPath,
-                        description = binding.descriptionEdittext.text.toString(),
-                        cuisine = binding.countryEdittext.text.toString(),
-                        recipeType = binding.recipeTypeEdittext.text.toString(),
-                        level = viewModel.levelSelected,
-                        minutesDuration = viewModel.minutesDuration,
-                        isFavorite = viewModel.isFavorite
-                    )
+                    R.id.finish_icon -> {
+                        val updatedRecipe = Recipe(
+                            title = binding.titleText.text.toString(),
+                            imageResourceUri = viewModel.currentPhotoPath,
+                            description = binding.descriptionEdittext.text.toString(),
+                            cuisine = binding.countryEdittext.text.toString(),
+                            recipeType = binding.recipeTypeEdittext.text.toString(),
+                            level = viewModel.levelSelected,
+                            minutesDuration = viewModel.minutesDuration,
+                            isFavorite = viewModel.isFavorite
+                        )
 
-                    if (mode == Mode.ADD) {
-                        viewModel.storeRecipe(recipe)
-                        findNavController().navigate(EditRecipeFragmentDirections.actionEditRecipeFragmentToRecipeFragment(recipe))
+                        if (mode == Mode.ADD) {
+                            viewModel.storeRecipe(updatedRecipe)
+                        } else {
+                            updatedRecipe.id = recipe?.id ?: 0
+                            viewModel.updateRecipe(updatedRecipe)
+                        }
 
-                    } else {
-                        recipe.id = args.recipe?.id ?: 0
-                        viewModel.updateRecipe(recipe)
-                        navController.previousBackStackEntry?.savedStateHandle?.set("recipe", recipe)
-                        findNavController().popBackStack(R.id.recipeFragment,false)
+                        findNavController().navigate(EditRecipeHostFragmentDirections.actionEditRecipeHostFragmentToRecipeHostFragment(updatedRecipe))
+
+                        true
                     }
-
-                    navController.previousBackStackEntry?.savedStateHandle?.set("recipe", recipe)
-                    findNavController().popBackStack(R.id.recipeFragment,false)
-
-                    true
-                }
-                else -> {
-                    true
+                    else -> {
+                        true
+                    }
                 }
             }
         }
@@ -138,7 +133,7 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
 
     @Throws(IOException::class)
     private fun createImageFile(): File? {
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val storageDir: File? = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(
             "JPEG_${timeStamp}_",
@@ -228,7 +223,7 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
             viewModel.minutesDuration = minutes
         }
 
-        picker.show(parentFragmentManager, "tag");
+        picker.show(parentFragmentManager, "tag")
     }
 
     private fun handlePhotoClick() {
@@ -250,6 +245,13 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
                 Toast.makeText(requireContext(), R.string.no_camera, Toast.LENGTH_LONG)
                     .show()
             }
+        }
+    }
+
+    companion object {
+        fun createInstance(recipe: Recipe?): EditRecipeFragment {
+            val bundle = bundleOf("recipe" to recipe)
+            return EditRecipeFragment().apply { arguments = bundle }
         }
     }
 

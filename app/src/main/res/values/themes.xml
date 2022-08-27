@@ -11,11 +11,19 @@
         <item name="colorSecondaryVariant">@color/secondaryLightColor</item>
         <item name="colorOnSecondary">@color/secondaryTextColor</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" >?attr/colorPrimary</item>
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
 
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="Theme.Recepten.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Recepten.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Recepten.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>

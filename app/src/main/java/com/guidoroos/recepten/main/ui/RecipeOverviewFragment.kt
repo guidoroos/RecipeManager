@@ -34,7 +34,7 @@ class RecipeOverviewFragment : Fragment() {
 
         val adapter = RecipeOverViewAdapter(RecipeOverViewAdapter.RecipeOverviewItemListener { recipe ->
            findNavController().navigate(RecipeOverviewFragmentDirections
-               .actionRecipeOverviewFragmentToRecipeFragment(recipe))
+               .actionRecipeOverviewFragmentToRecipeHostFragment(recipe))
         })
         binding.recipeListRecyclerview.adapter = adapter
 
@@ -42,10 +42,10 @@ class RecipeOverviewFragment : Fragment() {
             binding.iconFilter.background = getDrawable(requireContext(),R.drawable.ic_clear_filter)
         }
 
-        viewModel.filteredSortedList.observe(viewLifecycleOwner, Observer { list ->
+        viewModel.filteredSortedList.observe(viewLifecycleOwner
+        ) { list ->
             adapter.submitList(list)
         }
-        )
 
         binding.iconFilter.setOnClickListener {
             if (viewModel.isFilterSet()) {

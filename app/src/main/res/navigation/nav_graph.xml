@@ -13,8 +13,11 @@
             android:id="@+id/action_recipeOverviewFragment_to_recipeFilterFragment"
             app:destination="@id/recipeFilterFragment" />
         <action
-            android:id="@+id/action_recipeOverviewFragment_to_recipeFragment"
-            app:destination="@id/recipeFragment" />
+            android:id="@+id/action_recipeOverviewFragment_to_recipeHostFragment"
+            app:destination="@id/recipeHostFragment" />
+        <action
+            android:id="@+id/action_recipeOverviewFragment_to_editRecipeHostFragment"
+            app:destination="@id/editRecipeHostFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -63,4 +66,36 @@
             app:popUpTo="@id/editRecipeFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/recipeHostFragment"
+        android:name="com.guidoroos.recepten.recipe.RecipeHostFragment"
+        android:label="RecipeHostFragment">
+        <argument
+            android:name="recipe"
+            app:argType="com.guidoroos.recepten.db.Recipe"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+        <action
+            android:id="@+id/action_recipeHostFragment_to_editRecipeHostFragment"
+            app:destination="@id/editRecipeHostFragment"
+            app:popUpTo="@id/editRecipeHostFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editRecipeHostFragment"
+        android:name="com.guidoroos.recepten.recipe.EditRecipeHostFragment"
+        android:label="EditRecipeHostFragment">
+        <argument
+            android:name="recipe"
+            app:argType="com.guidoroos.recepten.db.Recipe"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+        <action
+            android:id="@+id/action_editRecipeHostFragment_to_recipeHostFragment"
+            app:destination="@id/recipeHostFragment"
+            app:popUpTo="@id/recipeOverviewFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+
 </navigation>
