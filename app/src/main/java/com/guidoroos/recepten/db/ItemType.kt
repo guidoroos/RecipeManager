@@ -7,6 +7,5 @@ import androidx.room.PrimaryKey
 data class ItemType  (
     @PrimaryKey(autoGenerate = true)
     val id : Long = 0,
-    val name : String,
-    val resourceId: Long
+    val resourceId: Int
 )

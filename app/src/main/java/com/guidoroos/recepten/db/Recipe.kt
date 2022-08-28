@@ -18,7 +18,6 @@ data class Recipe(
     val timeCreated: Long = System.currentTimeMillis(),
     val timeLastSeen: Long = System.currentTimeMillis(),
     val level: Int,
-    val isFavorite:Boolean = false,
     val minutesDuration:Int
 ): Parcelable
 

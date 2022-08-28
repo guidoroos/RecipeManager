@@ -9,7 +9,6 @@ data class Ingredient(
     val id : Long = 0,
     val value: Int,
     val unitId : Long,
-    val itemId : Long,
-    val position:String
+    val itemId : Long
 )
 

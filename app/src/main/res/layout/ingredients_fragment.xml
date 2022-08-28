@@ -8,10 +8,14 @@
         android:layout_height="match_parent"
         tools:context=".recipe.RecipeFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/ingredients_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margin_large"
+            android:layout_marginBottom="@dimen/margin_large"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

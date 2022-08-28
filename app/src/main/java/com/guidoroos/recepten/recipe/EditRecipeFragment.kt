@@ -97,8 +97,7 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
                             cuisine = binding.countryEdittext.text.toString(),
                             recipeType = binding.recipeTypeEdittext.text.toString(),
                             level = viewModel.levelSelected,
-                            minutesDuration = viewModel.minutesDuration,
-                            isFavorite = viewModel.isFavorite
+                            minutesDuration = viewModel.minutesDuration
                         )
 
                         if (mode == Mode.ADD) {
@@ -122,7 +121,6 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
         binding.starImage1.setOnClickListener(this)
         binding.starImage2.setOnClickListener(this)
         binding.starImage3.setOnClickListener(this)
-        binding.likeImage.setOnClickListener(this)
         binding.durationImage.setOnClickListener(this)
         binding.durationTextView.setOnClickListener(this)
         binding.recipePhoto.setOnClickListener(this)
@@ -196,14 +194,9 @@ class EditRecipeFragment : Fragment(), View.OnClickListener {
             binding.recipePhoto -> {
                 handlePhotoClick()
             }
-            binding.likeImage -> {
-                viewModel.isFavorite = !viewModel.isFavorite
-                setFilled (binding.likeImage, !viewModel.isFavorite)
-            }
             binding.durationImage, binding.durationTextView -> {
                 showTimePicker()
             }
-
         }
     }
 

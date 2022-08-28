@@ -8,5 +8,6 @@ data class RecipeIngredient  (
     @PrimaryKey(autoGenerate = true)
     val id : Long = 0,
     val recipeId : Long,
-    val ingredientId:Long
+    val ingredientId:Long,
+    val position:Int
 )

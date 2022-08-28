@@ -61,6 +61,39 @@ abstract class RecipeDatabase : RoomDatabase() {
                 scope.launch {
                     val recipeDao = database.recipeDao
 
+
+                    recipeDao.insertAllItemTypes(
+                        *listOf(
+                            ItemType(
+                                resourceId = R.string.vegetables
+                            ),
+                            ItemType(
+                                resourceId = R.string.meats_fish_substitutes
+                            ),
+                            ItemType(
+                                resourceId = R.string.dairy
+                            ),
+                            ItemType(
+                                resourceId = R.string.grains_rice
+                            ),
+                            ItemType(
+                                resourceId = R.string.dairy
+                            ),
+                            ItemType(
+                                resourceId = R.string.spices
+                            ), ItemType(
+                                resourceId = R.string.fats_oils
+                            ), ItemType(
+                                resourceId = R.string.nuts_baking_products
+                            ), ItemType(
+                                resourceId = R.string.beans_legumes
+                            ), ItemType(
+                                resourceId = R.string.fruits
+                            )
+                        ).toTypedArray()
+                    )
+
+
                     recipeDao.insertRecipe(
                         Recipe(
                             title = "Pasta Bolognese",
@@ -72,6 +105,12 @@ abstract class RecipeDatabase : RoomDatabase() {
                             minutesDuration = 25
                         )
                     )
+
+                    recipeDao.insertIngredient(Ingredient(
+                        value =
+                        unitId =,
+                        itemId =,
+                    ))
 
                     recipeDao.insertRecipe(
                         Recipe(

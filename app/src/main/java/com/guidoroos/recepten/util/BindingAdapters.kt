@@ -33,14 +33,16 @@ fun loadImage(
         .into(view)
 }
 
-@BindingAdapter("imageResource")
+@BindingAdapter("imageResource", "isEditPage")
 fun imageResourceOrPlaceholder(
     view: ImageView,
-    @DrawableRes imageUri: String?
+    imageUri: String?,
+    isEditPage:Boolean
 ) {
     when (imageUri) {
         null -> {
-            view.setImageResource(R.drawable.ic_baseline_local_dining_24)
+            val resource = if (isEditPage) R.drawable.ic_camera else R.drawable.ic_baseline_local_dining_24
+            view.setImageResource(resource)
         }
         "example_pasta" -> {
             val drawable = AppCompatResources.getDrawable(view.context, R.drawable.pasta)

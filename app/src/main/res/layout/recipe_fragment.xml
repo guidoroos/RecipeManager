@@ -25,21 +25,11 @@
             android:layout_marginEnd="@dimen/margin_large"
             android:scaleType="centerCrop"
             app:imageResource="@{recipe.imageResourceUri}"
+            app:isEditPage="@{false}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/pasta" />
-
-        <ImageView
-            android:id="@+id/like_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium"
-            android:layout_marginEnd="@dimen/margin_medium"
-            android:src="@drawable/favorite"
-            app:layout_constraintEnd_toEndOf="@+id/recipe_photo"
-            app:layout_constraintTop_toTopOf="@+id/recipe_photo"
-            app:setFilled="@{recipe.isFavorite}" />
 
         <ImageView
             android:id="@+id/location_image"

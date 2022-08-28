@@ -17,6 +17,52 @@ interface RecipeDao {
     @Query("SELECT * FROM recipe ORDER BY title")
     fun getAllRecipes(): Flow<List<Recipe>>
 
+    //
+    suspend fun createNewIngredient () {
+
+    }
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertIngredient(ingredient: Ingredient)
+
+    @Update
+    suspend fun updateIngredient(ingredient:Ingredient)
+
+    @Delete
+    suspend fun deleteIngredient(ingredient:Ingredient
+    )
+
+    //
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertRecipeIngredient(recipeIngredient: RecipeIngredient)
+
+    @Update
+    suspend fun updateRecipeIngredient(recipeIngredient:RecipeIngredient)
+
+    @Delete
+    suspend fun deleteRecipeIngredient(recipeIngredient:RecipeIngredient
+    )
+
+    //
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertRecipeIngredient(recipeIngredient: RecipeIngredient)
+
+    @Update
+    suspend fun updateRecipeIngredient(recipeIngredient:RecipeIngredient)
+
+    @Delete
+    suspend fun deleteRecipeIngredient(recipeIngredient:RecipeIngredient
+    )
+
+    //
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAllItemTypes(vararg itemType: ItemType)
+
+
+
+
+
 
 
 //

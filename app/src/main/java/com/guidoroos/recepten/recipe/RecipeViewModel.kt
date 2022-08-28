@@ -14,10 +14,7 @@ class RecipeViewModel @Inject constructor(private val repository: RecipeReposito
 
     var currentPhotoPath: String? = null
     var minutesDuration: Int = 0
-    var isFavorite: Boolean = false
     var levelSelected: Int = 0
-
-
 
     fun storeRecipe(recipe: Recipe) {
         viewModelScope.launch {

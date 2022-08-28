@@ -72,5 +72,15 @@
     <string name="update_recipe">Update Recipe</string>
     <string name="create_recipe">Create Recipe</string>
 
+    <string name="vegetables">Vegetables</string>
+    <string name="meats_fish_substitutes">Meats/Fish/Substitutes</string>
+    <string name="dairy">Dairy</string>
+    <string name="grains_rice">Rice/Grains</string>
+    <string name="spices">Spices/Herbs</string>
+    <string name="fats_oils">Fats/Oils</string>
+    <string name="nuts_baking_products">Nuts/Baking Products</string>
+    <string name="beans_legumes">Beans/Legumes</string>
+    <string name="fruits">Fruits</string>
+
 
 </resources>
