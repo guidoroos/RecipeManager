@@ -12,7 +12,7 @@
             type="com.guidoroos.recepten.db.Item" />
         <variable
             name="unit"
-            type="com.guidoroos.recepten.db.Unit" />
+            type="com.guidoroos.recepten.data.UnitData" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout

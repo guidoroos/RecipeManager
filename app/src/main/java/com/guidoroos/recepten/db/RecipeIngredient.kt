@@ -8,6 +8,8 @@ data class RecipeIngredient  (
     @PrimaryKey(autoGenerate = true)
     val id : Long = 0,
     val recipeId : Long,
-    val ingredientId:Long,
-    val position:Int
+    val ingredientId: Long,
+    val position:Int,
+    val value: Float,
+    val unitRes: Int?
 )

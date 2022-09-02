@@ -81,6 +81,47 @@
     <string name="nuts_baking_products">Nuts/Baking Products</string>
     <string name="beans_legumes">Beans/Legumes</string>
     <string name="fruits">Fruits</string>
+    <string name="non_food">Non-food</string>
+    <string name="volume">Volume</string>
+    <string name="weight">Weight</string>
+    <string name="distance">Distance</string>
+    <string name="centimeter">Centimeter</string>
+    <string name="inch">Inch</string>
+    <string name="gram">Gram</string>
+    <string name="kilogram">Kilogram</string>
+    <string name="milligram">Milligram</string>
+    <string name="millimeter">millimeter</string>
+    <string name="liter">liter</string>
+    <string name="milliLiter">milliliter</string>
+    <string name="deciLiter">deciliter</string>
+    <string name="temperature">Temperature</string>
+    <string name="pound">pound</string>
+    <string name="table_spoon">tablespoon</string>
+    <string name="tea_spoon">teaspoon</string>
+    <string name="fluid_ounce">fluid ounce</string>
+    <string name="cup">cup</string>
+    <string name="ounce">ounce</string>
+    <string name="celsius">degrees Celsius</string>
+    <string name="fahrenheit">degrees Fahrenheit</string>
+    <string name="abbr_celsius">C</string>
+    <string name="abbr_fahrenheit">F</string>
+    <string name="abbr_milliLiter">mL</string>
+    <string name="abbr_centimeter">cm</string>
+    <string name="abbr_millimeter">mm</string>
+    <string name="abbr_gram">g</string>
+    <string name="abbr_kilogram">kg</string>
+    <string name="abbr_milligram">mg</string>
+    <string name="abbr_liter">L</string>
+    <string name="abbr_deciLiter">dL</string>
+    <string name="abbr_tea_spoon">ts</string>
+    <string name="abbr_table_spoon">tbs</string>
+    <string name="abbr_fluid_ounce">fl. oz.</string>
+    <string name="abbr_ounce">oz.</string>
+    <string name="centiLiter">centiLiter</string>
+    <string name="abbr_centiLiter">cL</string>
+    <string name="pinch">pinch</string>
+    <string name="other">other</string>
+    <string name="to_taste">to taste</string>
 
 
 </resources>

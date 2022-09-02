@@ -7,8 +7,7 @@ import androidx.room.PrimaryKey
 data class Ingredient(
     @PrimaryKey(autoGenerate = true)
     val id : Long = 0,
-    val value: Int,
-    val unitId : Long,
-    val itemId : Long
+    val name: String,
+    val typeRes: Int?
 )
 
