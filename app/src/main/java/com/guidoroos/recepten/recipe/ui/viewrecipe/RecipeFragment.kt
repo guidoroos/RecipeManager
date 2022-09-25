@@ -1,19 +1,18 @@
-package com.guidoroos.recepten.recipe
+package com.guidoroos.recepten.recipe.ui.viewrecipe
 
-import android.content.Context
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.databinding.adapters.TextViewBindingAdapter.setText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.google.android.material.appbar.MaterialToolbar
 import com.guidoroos.recepten.R
 import com.guidoroos.recepten.databinding.RecipeFragmentBinding
 import com.guidoroos.recepten.db.Recipe
+import com.guidoroos.recepten.recipe.viewmodel.RecipeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -63,7 +62,7 @@ class RecipeFragment : Fragment() {
     }
 
     companion object {
-        fun createInstance (recipe:Recipe?):RecipeFragment {
+        fun createInstance (recipe:Recipe?): RecipeFragment {
             val bundle = bundleOf("recipe" to recipe)
             return RecipeFragment().apply { arguments = bundle }
         }

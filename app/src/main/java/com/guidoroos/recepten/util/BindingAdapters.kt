@@ -1,25 +1,25 @@
 package com.guidoroos.recepten.util
 
-import android.content.ContentProvider
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.DrawableRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.guidoroos.recepten.R
 import java.io.File
 
+@BindingAdapter("isVisible")
+fun View.setVisibility(show: Boolean) {
+    this.visibility = if (show) View.VISIBLE else View.GONE
+}
 
 @BindingAdapter("imageUrl")
 fun loadImage(
@@ -37,11 +37,12 @@ fun loadImage(
 fun imageResourceOrPlaceholder(
     view: ImageView,
     imageUri: String?,
-    isEditPage:Boolean
+    isEditPage: Boolean
 ) {
     when (imageUri) {
         null -> {
-            val resource = if (isEditPage) R.drawable.ic_camera else R.drawable.ic_baseline_local_dining_24
+            val resource =
+                if (isEditPage) R.drawable.ic_camera else R.drawable.ic_baseline_local_dining_24
             view.setImageResource(resource)
         }
         "example_pasta" -> {
@@ -53,9 +54,11 @@ fun imageResourceOrPlaceholder(
             view.setImageDrawable(drawable)
         }
         else -> {
-            val imageBitmap = getCapturedImage(view.context, Uri.fromFile(
-                File(imageUri)
-            ))
+            val imageBitmap = getCapturedImage(
+                view.context, Uri.fromFile(
+                    File(imageUri)
+                )
+            )
             view.setImageBitmap(imageBitmap)
         }
     }
@@ -64,40 +67,39 @@ fun imageResourceOrPlaceholder(
 @BindingAdapter("setFilled")
 fun setFilled(
     view: ImageView,
-    shouldFill:Boolean
+    shouldFill: Boolean
 ) {
     if (shouldFill) {
-        val color = ContextCompat.getColor(view.context,R.color.primaryColor)
+        val color = ContextCompat.getColor(view.context, R.color.primaryColor)
         view.setColorFilter(color)
     } else {
-        val color = ContextCompat.getColor(view.context,R.color.cardview_shadow_end_color)
+        val color = ContextCompat.getColor(view.context, R.color.cardview_shadow_end_color)
         view.setColorFilter(color)
     }
 }
 
-@BindingAdapter("starLevel","starNumber")
+@BindingAdapter("starLevel", "starNumber")
 fun setStarsFilled(
     view: ImageView,
     level: Int,
-    starNumber:Int
+    starNumber: Int
 ) {
     when (starNumber) {
-        1 -> setFilled(view,level >= 1)
-        2 -> setFilled(view,level >= 2)
-        3 -> setFilled (view, level >= 3)
+        1 -> setFilled(view, level >= 1)
+        2 -> setFilled(view, level >= 2)
+        3 -> setFilled(view, level >= 3)
     }
 }
 
 @BindingAdapter("formatDuration")
 fun setDurationText(
     view: TextView,
-    minutes:Int
+    minutes: Int
 ) {
     if (minutes < 60) {
         val text = "$minutes minutes"
         view.text = text
-    }
-    else {
+    } else {
         val text = "${minutes / 60}:${minutes % 60} hours"
         view.text = text
     }

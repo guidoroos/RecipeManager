@@ -1,11 +1,10 @@
-package com.guidoroos.recepten.recipe
+package com.guidoroos.recepten.recipe.ui.editrecipe
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.AppBarConfiguration
@@ -18,10 +17,10 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class RecipeHostFragment : Fragment() {
+class EditRecipeHostFragment : Fragment() {
 
     private lateinit var binding: RecipeHostFragmentBinding
-    private val args:RecipeHostFragmentArgs by navArgs()
+    private val args:EditRecipeHostFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +33,8 @@ class RecipeHostFragment : Fragment() {
 
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
 
-        binding.viewPager.adapter = RecipeFragmentStateAdapter(this, args.recipe)
+
+        binding.viewPager.adapter = EditRecipeFragmentStateAdapter(this, args.recipe)
 
         binding.tabs.tabGravity = TabLayout.GRAVITY_FILL
 

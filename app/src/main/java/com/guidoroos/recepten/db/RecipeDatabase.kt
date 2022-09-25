@@ -1,6 +1,5 @@
 package com.guidoroos.recepten.db
 
-import android.content.ClipData
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
@@ -14,13 +13,9 @@ import kotlinx.coroutines.launch
     entities = [
         GroceryList::class,
         Ingredient::class,
-        ClipData.Item::class,
-        IngredientType::class,
         Recipe::class,
         RecipeIngredient::class,
-        RecipeStep::class,
-        UnitData::class,
-        UnitType::class],
+        RecipeStep::class],
     version = 1, exportSchema = false
 )
 
@@ -62,7 +57,7 @@ abstract class RecipeDatabase : RoomDatabase() {
                 scope.launch {
                     database.recipeDao.apply {
 
-                        val pastaRecipe = Recipe(
+                      val pastaRecipeId = insertRecipe(Recipe(
                             title = "Pasta Bolognese",
                             imageResourceUri = "example_pasta",
                             description = "Italian Pasta",
@@ -71,9 +66,9 @@ abstract class RecipeDatabase : RoomDatabase() {
                             numberPortions = 4,
                             level = 1,
                             minutesDuration = 45
-                        )
+                        ))
 
-                        insertRecipe(pastaRecipe)
+                        val pastaRecipe = getRecipeById (pastaRecipeId)
 
                         pastaRecipe.addIngredient(
                             name = "olive oil",
@@ -217,7 +212,8 @@ abstract class RecipeDatabase : RoomDatabase() {
                         
                         /////////
 
-                        val curryRecipe = Recipe(
+                        val curryRecipeId = insertRecipe (
+                            Recipe(
                             title = "Indian Curry",
                             imageResourceUri = "example_curry",
                             description = "Hot and spicy",
@@ -226,9 +222,10 @@ abstract class RecipeDatabase : RoomDatabase() {
                             numberPortions = 4,
                             level = 2,
                             minutesDuration = 40
+                            )
                         )
                         
-                        insertRecipe(curryRecipe)
+                       val curryRecipe = getRecipeById(curryRecipeId)
 
                        curryRecipe.addIngredient(
                             name = "olive oil",

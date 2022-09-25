@@ -1,4 +1,4 @@
-package com.guidoroos.recepten.recipe
+package com.guidoroos.recepten.recipe.ui.step
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.guidoroos.recepten.R
+import com.guidoroos.recepten.recipe.viewmodel.RecipeViewModel
 
 class RecipeStepOverviewFragment : Fragment() {
 

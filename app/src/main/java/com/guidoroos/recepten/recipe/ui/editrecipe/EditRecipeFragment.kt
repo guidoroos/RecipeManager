@@ -1,4 +1,4 @@
-package com.guidoroos.recepten.recipe
+package com.guidoroos.recepten.recipe.ui.editrecipe
 
 import android.Manifest
 import android.app.Activity.RESULT_OK
@@ -29,6 +29,7 @@ import com.google.android.material.timepicker.TimeFormat
 import com.guidoroos.recepten.R
 import com.guidoroos.recepten.databinding.EditRecipeFragmentBinding
 import com.guidoroos.recepten.db.Recipe
+import com.guidoroos.recepten.recipe.viewmodel.RecipeViewModel
 import com.guidoroos.recepten.util.setDurationText
 import com.guidoroos.recepten.util.setFilled
 import dagger.hilt.android.AndroidEntryPoint

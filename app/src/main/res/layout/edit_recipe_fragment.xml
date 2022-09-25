@@ -13,21 +13,47 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".recipe.RecipeFragment">
+        tools:context=".recipe.ui.viewrecipe.RecipeFragment">
 
         <ImageView
             android:id="@+id/recipe_photo"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginTop="@dimen/margin_large"
-            android:layout_marginEnd="@dimen/margin_large"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
             android:scaleType="centerCrop"
             app:imageResource="@{recipe.imageResourceUri}"
             app:isEditPage="@{true}"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/pasta" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/portions_inputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:hint="@string/portions"
+            app:endIconMode="clear_text"
+            app:layout_constraintBottom_toBottomOf="@+id/recipe_photo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/recipe_photo"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/portions_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top"
+                android:inputType="number"
+                android:maxLength="2"
+                android:text="@{Integer.toString(recipe.numberPortions)}"
+                tools:text="A simple recipe for classic Italian pasta" />
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/title_inputLayout"
@@ -35,7 +61,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_medium"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="@dimen/margin_medium"
             android:hint="@string/title"
             app:endIconMode="clear_text"

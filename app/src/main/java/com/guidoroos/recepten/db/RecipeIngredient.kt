@@ -11,5 +11,5 @@ data class RecipeIngredient  (
     val ingredientId: Long,
     val position:Int,
     val value: Float,
-    val unitRes: Int?
+    val unit: String
 )

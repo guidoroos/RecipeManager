@@ -6,8 +6,9 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface RecipeDao {
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertRecipe(recipe: Recipe )
+    suspend fun insertRecipe(recipe: Recipe ): Long
 
     @Update
     suspend fun updateRecipe(recipe: Recipe)
@@ -18,37 +19,40 @@ interface RecipeDao {
     @Query("SELECT * FROM recipe ORDER BY title")
     fun getAllRecipes(): Flow<List<Recipe>>
 
-    //
-    suspend fun createNewIngredient () {
+    @Query("SELECT * FROM recipe WHERE id = :id")
+    fun getRecipeById(id:Long): Recipe
 
-    }
+
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertIngredient(ingredient: Ingredient)
+    suspend fun insertIngredient(ingredient: Ingredient):Long
 
-    private suspend fun insertIngredient (name:String, type:IngredientType):Ingredient {
+    private suspend fun insertIngredient (name:String, type:IngredientType):Long {
         val ingredient = Ingredient(name=name, typeRes = type.resourceId )
-        insertIngredient(ingredient)
-        return ingredient
+        return insertIngredient(ingredient)
     }
 
     suspend fun Recipe.addIngredient(
         name: String,
         type: IngredientType,
         position: Int,
-        unit: UnitEnum? = null,
+        unit: UnitEnum = UnitEnum.Unit,
         value: Float
     ) {
-        val ingredient = insertIngredient(name, type)
+        val ingredientId = insertIngredient(name, type)
+        val ingredient = getIngredientFromId(ingredientId)
 
         insertRecipeIngredient(
-            ingredient,
-            this,
-            position,
-            unitData[unit],
-            value
+            ingredient = ingredient,
+            recipe = this,
+            position = position,
+            unit = unit,
+            value = value
         )
     }
+
+    @Query("SELECT * FROM ingredient WHERE id = :id")
+    fun getIngredientFromId(id:Long): Ingredient
 
     @Update
     suspend fun updateIngredient(ingredient:Ingredient)
@@ -63,6 +67,9 @@ interface RecipeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRecipeIngredient(recipeIngredient: RecipeIngredient)
 
+    @Query("SELECT * FROM recipe_ingredient WHERE recipeId == :recipeId")
+    fun getIngredientsForRecipe (recipeId:Long):List<RecipeIngredient>
+
     @Update
     suspend fun updateRecipeIngredient(recipeIngredient:RecipeIngredient)
 
@@ -70,13 +77,11 @@ interface RecipeDao {
     suspend fun deleteRecipeIngredient(recipeIngredient:RecipeIngredient
     )
 
-
-
-    private suspend fun insertRecipeIngredient (
+    suspend fun insertRecipeIngredient (
         ingredient:Ingredient,
         recipe:Recipe,
         position:Int,
-        unit:UnitData? = null,
+        unit:UnitEnum,
         value:Float,
     ) {
         val recipeIngredient = RecipeIngredient (
@@ -84,7 +89,7 @@ interface RecipeDao {
         ingredientId = ingredient.id,
         position = position,
         value = value,
-        unitRes= unit?.nameResource
+        unit= unit.name
         )
 
         insertRecipeIngredient (recipeIngredient)

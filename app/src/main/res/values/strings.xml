@@ -122,6 +122,8 @@
     <string name="pinch">pinch</string>
     <string name="other">other</string>
     <string name="to_taste">to taste</string>
+    <string name="portions">Portions</string>
+    <string name="unit" />
 
 
 </resources>

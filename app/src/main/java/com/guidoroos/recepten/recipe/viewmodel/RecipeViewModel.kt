@@ -1,16 +1,34 @@
-package com.guidoroos.recepten.recipe
+package com.guidoroos.recepten.recipe.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.guidoroos.recepten.data.IngredientType
+import com.guidoroos.recepten.data.IngredientViewData
+import com.guidoroos.recepten.data.UnitEnum
+import com.guidoroos.recepten.db.Ingredient
 import com.guidoroos.recepten.db.Recipe
+import com.guidoroos.recepten.db.RecipeIngredient
 import com.guidoroos.recepten.repository.RecipeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class RecipeViewModel @Inject constructor(private val repository: RecipeRepository):
     ViewModel()   {
+
+    private val _recipeIngredients = MutableLiveData<List<IngredientViewData>>()
+    val recipeIngredients: LiveData<List<IngredientViewData>>
+        get() = _recipeIngredients
+
+    fun getRecipeIngredients (recipe:Recipe?) {
+        if (recipe != null) {
+            viewModelScope.launch(Dispatchers.IO) {
+                val result = repository.getRecipeIngredients(recipe)
+                _recipeIngredients.postValue(result)
+            }
+        }
+    }
 
     var currentPhotoPath: String? = null
     var minutesDuration: Int = 0
@@ -33,4 +51,8 @@ class RecipeViewModel @Inject constructor(private val repository: RecipeReposito
             repository.deleteRecipe(recipe)
         }
     }
+
+
+
+
 }

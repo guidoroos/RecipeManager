@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/recipeHostFragment"
-        android:name="com.guidoroos.recepten.recipe.RecipeHostFragment"
+        android:name="com.guidoroos.recepten.recipe.ui.viewrecipe.RecipeHostFragment"
         android:label="RecipeHostFragment">
         <argument
             android:name="recipe"
@@ -56,7 +56,7 @@
 
     <fragment
         android:id="@+id/editRecipeHostFragment"
-        android:name="com.guidoroos.recepten.recipe.EditRecipeHostFragment"
+        android:name="com.guidoroos.recepten.recipe.ui.editrecipe.EditRecipeHostFragment"
         android:label="EditRecipeHostFragment">
         <argument
             android:name="recipe"

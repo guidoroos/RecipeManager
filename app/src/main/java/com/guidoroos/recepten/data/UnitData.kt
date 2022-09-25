@@ -19,6 +19,7 @@ data class UnitData(
     val perStandardUnit: Float? = null,
     val unitType: UnitType,
     val isStandardUnit: Boolean,
+    val showUnitText:Boolean = true
 )
 
 
@@ -53,10 +54,22 @@ enum class UnitEnum {
     Cup,
     FluidOunce,
     Pinch,
-    ToTaste
+    ToTaste,
+    Unit
 }
 
 val unitData = mapOf(
+    UnitEnum.Unit to UnitData(
+        nameResource = R.string.unit,
+        unitType = UnitType.Other,
+        isStandardUnit = false,
+        showUnitText = false
+    ),
+    UnitEnum.ToTaste to UnitData(
+        nameResource = R.string.to_taste,
+        unitType = UnitType.Other,
+        isStandardUnit = false
+    ),
     UnitEnum.ToTaste to UnitData(
         nameResource = R.string.to_taste,
         unitType = UnitType.Other,
