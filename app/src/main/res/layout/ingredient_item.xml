@@ -22,8 +22,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_medium_large"
         android:layout_marginBottom="@dimen/margin_small"
-        android:textSize="18sp"
-        android:text='@{ "• " + Float.toString(data.recipeIngredient.value)}'
+        android:textSize="24sp"
+        android:text='@{ "• " + data.recipeIngredient.fraction.toString()}'
         tools:text="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_small"
         android:layout_marginBottom="@dimen/margin_small"
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:text='@{data.unit.abbreviationResource != null ? data.unit.abbreviationResource : data.unit.nameResource}'
         app:isVisible = '@{ data.unit.showUnitText}'
         tools:text="ts"
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_small"
         android:layout_marginBottom="@dimen/margin_small"
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:text='@{data.ingredient.name}'
         tools:text="olive oil"
         app:layout_constraintBottom_toBottomOf="parent"

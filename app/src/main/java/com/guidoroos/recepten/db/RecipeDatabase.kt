@@ -75,60 +75,61 @@ abstract class RecipeDatabase : RoomDatabase() {
                             type = IngredientType.Fats,
                             position = 0,
                             unit = UnitEnum.TableSpoon,
-                            value = 2f,
+                            value = 2,
                         )
                         pastaRecipe.addIngredient(
                             name = "minced beef",
                             type = IngredientType.MeatFish,
                             position = 1,
                             unit = UnitEnum.Gram,
-                            value = 800f,
+                            value = 800,
                         )
                         pastaRecipe.addIngredient(
                             name = "onion",
                             type = IngredientType.Vegetables,
                             position = 2,
-                            value = 1f,
+                            value = 1,
+                            valueDenominator = 2
                         )
                         pastaRecipe.addIngredient(
                             name = "garlic cloves",
                             type = IngredientType.Vegetables,
                             position = 3,
-                            value = 2f,
+                            value = 2,
                         )
                         pastaRecipe.addIngredient(
                             name = "stock cube",
                             type = IngredientType.Spice,
                             position = 4,
-                            value = 1f,
+                            value = 1,
                         )
                         pastaRecipe.addIngredient(
                             name = "spaghetti",
                             type = IngredientType.Grains,
                             position = 5,
                             unit = UnitEnum.Gram,
-                            value = 400f,
+                            value = 400,
                         )
                         pastaRecipe.addIngredient(
                             name = "salt",
                             type = IngredientType.Spice,
                             position = 6,
                             unit = UnitEnum.ToTaste,
-                            value = 1f,
+                            value = 1,
                         )
                         pastaRecipe.addIngredient(
                             name = "pepper",
                             type = IngredientType.Spice,
                             position = 7,
                             unit = UnitEnum.Pinch,
-                            value = 1f,
+                            value = 1,
                         )
                         pastaRecipe.addIngredient(
                             name = "carrot",
                             type = IngredientType.Vegetables,
                             position = 8,
                             unit = UnitEnum.Gram,
-                            value = 100f,
+                            value = 100,
                         )
 
 
@@ -232,76 +233,75 @@ abstract class RecipeDatabase : RoomDatabase() {
                             type = IngredientType.Fats,
                             position = 0,
                             unit = UnitEnum.TableSpoon,
-                            value = 2f,
+                            value = 2,
                         )
                        curryRecipe.addIngredient(
                             name = "paneer",
                             type = IngredientType.MeatFish,
                             position = 1,
                             unit = UnitEnum.Gram,
-                            value = 250f,
+                            value = 250,
                         )
                        curryRecipe.addIngredient(
                             name = "onion",
                             type = IngredientType.Vegetables,
                             position = 2,
-                            unit = UnitEnum.TableSpoon,
-                            value = 2f,
+                            value = 2,
                         )
                        curryRecipe.addIngredient(
                             name = "chilli flakes",
                             type = IngredientType.Spice,
                             position = 3,
                             unit = UnitEnum.TeaSpoon,
-                            value = 1f,
+                            value = 1,
                         )
                        curryRecipe.addIngredient(
                             name = "curry powder",
                             type = IngredientType.Spice,
                             position = 4,
                             unit = UnitEnum.TableSpoon,
-                            value = 1f,
+                            value = 1,
                         )
                        curryRecipe.addIngredient(
                             name = "canned diced tomatoes",
                             type = IngredientType.Vegetables,
                             position = 5,
                             unit = UnitEnum.Gram,
-                            value = 200f,
+                            value = 200,
                         )
                        curryRecipe.addIngredient(
                             name = "rice",
                             type = IngredientType.Grains,
                             position = 6,
                             unit = UnitEnum.Gram,
-                            value = 200f,
+                            value = 200,
                         )
                        curryRecipe.addIngredient(
                             name = "potatoes",
                             type = IngredientType.Grains,
                             position = 7,
                             unit = UnitEnum.Gram,
-                            value = 250f,
+                            value = 250,
                         )
                        curryRecipe.addIngredient(
                             name = "stock cube",
                             type = IngredientType.Spice,
                             position = 8,
-                            value = 1f,
+                            value = 1,
                         )
                         curryRecipe.addIngredient(
                             name = "salt",
                             type = IngredientType.Spice,
                             position = 9,
                             unit = UnitEnum.ToTaste,
-                            value = 1f,
+                            value = 1,
                         )
                         curryRecipe.addIngredient(
                             name = "pepper",
                             type = IngredientType.Spice,
                             position = 10,
                             unit = UnitEnum.Pinch,
-                            value = 1f,
+                            value = 1,
                         )
 
                         curryRecipe.addStep(

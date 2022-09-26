@@ -37,7 +37,8 @@ interface RecipeDao {
         type: IngredientType,
         position: Int,
         unit: UnitEnum = UnitEnum.Unit,
-        value: Float
+        value: Int,
+        valueDenominator:Int = 1
     ) {
         val ingredientId = insertIngredient(name, type)
         val ingredient = getIngredientFromId(ingredientId)
@@ -47,7 +48,8 @@ interface RecipeDao {
             recipe = this,
             position = position,
             unit = unit,
-            value = value
+            value = value,
+            valueDenominator
         )
     }
 
@@ -82,13 +84,15 @@ interface RecipeDao {
         recipe:Recipe,
         position:Int,
         unit:UnitEnum,
-        value:Float,
+        value:Int,
+        valueDenominator: Int = 1
     ) {
         val recipeIngredient = RecipeIngredient (
         recipeId = recipe.id,
         ingredientId = ingredient.id,
         position = position,
         value = value,
+        valueDenominator = valueDenominator,
         unit= unit.name
         )
 
