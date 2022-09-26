@@ -309,7 +309,7 @@ abstract class RecipeDatabase : RoomDatabase() {
                             position = 0
                         )
                         curryRecipe.addStep(
-                            description = "add the rice to a cooking pot together with 300mL of water and continue with the rest of the recipe",
+                            description = "add the rice to a cooking pot together with 300mL of water to rest, and continue with the rest of the recipe",
                             position = 1
                         )
                         curryRecipe.addStep(

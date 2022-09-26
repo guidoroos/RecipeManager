@@ -28,7 +28,7 @@ fun loadImage(
 ) { // This methods should not have any return type, = declaration would make it return that object declaration.
     Glide.with(view.context)
         .load(url)
-        .placeholder(R.drawable.ic_baseline_local_dining_24)
+        .placeholder(R.drawable.ic_local_dining)
         .circleCrop()
         .into(view)
 }
@@ -42,7 +42,7 @@ fun imageResourceOrPlaceholder(
     when (imageUri) {
         null -> {
             val resource =
-                if (isEditPage) R.drawable.ic_camera else R.drawable.ic_baseline_local_dining_24
+                if (isEditPage) R.drawable.ic_camera else R.drawable.ic_local_dining
             view.setImageResource(resource)
         }
         "example_pasta" -> {

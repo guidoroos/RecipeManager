@@ -102,7 +102,7 @@ interface RecipeDao {
     //
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertStep(step: RecipeStep )
+    suspend fun insertStep(step: RecipeStep):Long
 
     @Update
     suspend fun updateStep(step: RecipeStep)
@@ -124,13 +124,8 @@ interface RecipeDao {
         insertStep (step)
     }
 
-
-
-
-
-
-
-
+    @Query("SELECT * FROM step WHERE recipeId == :recipeId")
+    fun getStepsForRecipe (recipeId:Long):List<RecipeStep>
 
 
 

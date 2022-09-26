@@ -6,6 +6,7 @@ import com.guidoroos.recepten.data.*
 import com.guidoroos.recepten.db.Ingredient
 import com.guidoroos.recepten.db.Recipe
 import com.guidoroos.recepten.db.RecipeDao
+import com.guidoroos.recepten.db.RecipeStep
 import com.guidoroos.recepten.filter.model.FilterItem
 import com.guidoroos.recepten.filter.model.FilterValueString
 import kotlinx.coroutines.CoroutineScope
@@ -64,6 +65,10 @@ class RecipeRepository @Inject constructor(private val dao: RecipeDao) {
 
     suspend fun deleteRecipe(recipe:Recipe) {
         dao.deleteRecipe(recipe)
+    }
+
+    fun getRecipeSteps(recipe: Recipe): List<RecipeStep> {
+        return  dao.getStepsForRecipe(recipe.id)
     }
 
 

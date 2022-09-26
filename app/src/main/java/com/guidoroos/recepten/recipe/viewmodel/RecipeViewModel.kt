@@ -7,6 +7,7 @@ import com.guidoroos.recepten.data.UnitEnum
 import com.guidoroos.recepten.db.Ingredient
 import com.guidoroos.recepten.db.Recipe
 import com.guidoroos.recepten.db.RecipeIngredient
+import com.guidoroos.recepten.db.RecipeStep
 import com.guidoroos.recepten.repository.RecipeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -16,6 +17,10 @@ import javax.inject.Inject
 @HiltViewModel
 class RecipeViewModel @Inject constructor(private val repository: RecipeRepository):
     ViewModel()   {
+
+    private val _recipeSteps = MutableLiveData<List<RecipeStep>>()
+    val recipeSteps: LiveData<List<RecipeStep>>
+        get() = _recipeSteps
 
     private val _recipeIngredients = MutableLiveData<List<IngredientViewData>>()
     val recipeIngredients: LiveData<List<IngredientViewData>>
@@ -52,7 +57,14 @@ class RecipeViewModel @Inject constructor(private val repository: RecipeReposito
         }
     }
 
-
+    fun getRecipeSteps(recipe: Recipe?) {
+        if (recipe != null) {
+            viewModelScope.launch(Dispatchers.IO) {
+                val result = repository.getRecipeSteps(recipe)
+                _recipeSteps.postValue(result)
+            }
+        }
+    }
 
 
 }

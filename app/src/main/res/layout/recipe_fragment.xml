@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_medium"
             android:layout_marginTop="@dimen/margin_default"
-            android:src="@drawable/ic_baseline_local_dining_24"
+            android:src="@drawable/ic_local_dining"
             app:layout_constraintStart_toStartOf="@+id/recipe_photo"
             app:layout_constraintTop_toBottomOf="@+id/recipe_photo"
             app:tint="@color/primaryColor" />
